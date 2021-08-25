@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "whatsappdemo-98c20": {
+      "hosting": {
+        "WhatsappDemo2": [
+          "whatsappdemo-98c20"
+        ]
+      }
+    }
+  }
+}
