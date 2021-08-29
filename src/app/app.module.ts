@@ -9,11 +9,24 @@ import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './nav/navbar.component';
+import { NavleftComponent } from './nav/navleft/navleft.component';
+import { NavrightComponent } from './nav/navright/navright.component';
+import { NewchatComponent } from './newchat/newchat.component';
+import { RecentMessagesComponent } from './recent-messages/recent-messages.component';
+import { ChatwindowComponent } from './chatwindow/chatwindow.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginOrSignUpComponent } from './login-or-sign-up/login-or-sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    NavleftComponent,
+    NavrightComponent,
+    NewchatComponent,
+    RecentMessagesComponent,
+    ChatwindowComponent,
+    LoginOrSignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +34,9 @@ import { NavbarComponent } from './nav/navbar.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

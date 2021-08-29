@@ -1,0 +1,34 @@
+<div class="container" style="height: 80%; overflow-y:auto;">
+    <div *ngFor="let item of chats_data">
+        <div *ngIf="data">
+            <br>
+            <div *ngIf="(item.from==data.currentuser && item.to==data.reciever)" class="message-blue">
+                <p class="message-content">{{item.text}}</p>
+                <div class="message-timestamp-left">{{item.timestamp.toDate() | date: 'shortTime'}}</div>
+            </div>
+        </div>
+
+        <div *ngIf="data">
+            <br>
+            <div *ngIf="(item.from==data.reciever && item.to == data.currentuser)" class="message-orange">
+                <p class="message-content">{{item.text}}</p>
+                <div class="message-timestamp-right">{{item.timestamp.toDate()| date: 'shortTime'}}</div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+
+<form class="container padding-top-form" (ngSubmit)="submitFunction()" #form="ngForm">
+    <div *ngIf="data" class="input-group input-group-sm mb-3">
+        <div class="col-md-9">
+            <input name="blah" #inputTextBox [(ngModel)]="text_submit" type="text" class="form-control" placeholder="Enter text">
+        </div>
+        <div class="col-md-3">
+            <button (click)="inputTextBox.value=''" class="rounded-circle" style="background-color: rgb(245, 223, 223);">
+  <i class="fa fa-plane" aria-hidden="true"></i>
+</button>
+        </div>
+    </div>
+</form>

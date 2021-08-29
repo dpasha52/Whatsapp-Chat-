@@ -1,0 +1,30 @@
+<div class="max-height">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-success">
+        <img *ngIf="imgsrc" class=" rounded-circle " style="width: 82px;" [src]='imgsrc' alt="not availabe">
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"></button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-commenting-o fa-2x" (click)="openNewMessageComponent()" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-circle-o-notch fa-2x" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <app-recent-messages style="background-color:#d4cece ;"></app-recent-messages>
+</div>

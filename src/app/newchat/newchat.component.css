@@ -1,0 +1,65 @@
+.conatiner-height {
+    height: 100vh;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    height: 5px;
+    display: block;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #3b3b3b;
+    height: 20px;
+    /* -webkit-border-radius: 6px; */
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 10px;
+    background-color: #666;
+    border: 1px solid #eee;
+    /* -webkit-border-radius: 6px; */
+}
+
+.anchormod {
+    color: #13161a;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.anchormod:hover {
+    color: #a1acb8;
+    text-decoration: none;
+}
+
+.nav-pad {
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.pad-left {
+    padding-left: 6%;
+}
+
+.title-padding {
+    padding-top: 7%;
+    padding-bottom: 7%;
+}
+
+.arrow-padding {
+    padding-left: 8%;
+}
+
+.before {
+    background-color: azure;
+}
+
+.after {
+    background-color: #fff;
+}

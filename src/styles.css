@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+.app-root {
+    display: block;
+    height: 100vh;
+}
+
+html,
+body {
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    /* height: auto;
+    margin: 0;
+    overflow: auto; */
+}

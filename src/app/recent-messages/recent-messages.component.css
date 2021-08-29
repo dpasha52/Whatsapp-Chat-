@@ -1,0 +1,52 @@
+.before {
+    background-color: azure;
+}
+
+.after {
+    background-color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    height: 5px;
+    display: block;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #3b3b3b;
+    height: 20px;
+    /* -webkit-border-radius: 6px; */
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 10px;
+    background-color: #666;
+    border: 1px solid #eee;
+    /* -webkit-border-radius: 6px; */
+}
+
+.pad-left {
+    height: 100vh;
+    /* min-height: 100vh; */
+    /* height: auto;
+    margin: 0;
+    overflow: auto;*/
+    padding-left: 4%;
+}
+
+.anchormod {
+    color: #13161a;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.anchormod:hover {
+    color: #a1acb8;
+    text-decoration: none;
+}
