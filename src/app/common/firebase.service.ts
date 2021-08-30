@@ -23,7 +23,7 @@ export class FirebaseService {
       //     this.chats=data as Chats[];
       //     console.log(this.chats)
       //   });
-
+      //collection('cities');
       return this.firestore.collection('Chats').valueChanges();
 
      }
@@ -33,7 +33,11 @@ export class FirebaseService {
     //   this.users=data as Users[];
     //   console.log(this.users)
     // });
+    //const citiesRef = this.firestore.doc<Users>('Users/id4').get().subscribe(dat=>{
+     // console.log(dat.data,"Checking for doc data ");
+    //});
     return this.firestore.collection('Users').valueChanges();
+
   }
 
   setUser(data:Users){
@@ -49,8 +53,8 @@ export class FirebaseService {
 
   }
 
-  getCurrentUser(user:string){
-    return this.firestore.collection('Users', (ref) => ref.where('email', '==', user ).limit(1)).valueChanges();
+  getCurrentUser(user:string):Observable<Users[]>{
+    return this.firestore.collection('Users', (ref) => ref.where('email', '==', user).limit(1)).valueChanges() as Observable<Users[]>;
   }
 
 

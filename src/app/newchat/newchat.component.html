@@ -23,7 +23,7 @@
         <ul class="list-group list-group-flush ">
             <li *ngFor="let item of users_recent" class="list-group-item">
                 <a class="anchormod">
-                    <div class="row" (click)="callFunct('dpasha52',item.name,true,item.profilepic)">
+                    <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
                         <div class="col-md-2" style="padding-bottom: 20px;">
                             <img *ngIf="item.profilepic" class="rounded-circle" [src]="item?.profilepic" style=" display: inline-block; width: 75px;height: 75px;">
                         </div>
@@ -51,7 +51,7 @@
         <ul class="list-group list-group-flush ">
             <li *ngFor="let item of usersonInit" class="list-group-item">
                 <a class="anchormod">
-                    <div class="row" (click)="callFunct('dpasha52',item.name,true,item.profilepic)">
+                    <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
                         <div class="col-md-2" style="padding-bottom: 20px;">
                             <img *ngIf="item.profilepic" class="rounded-circle" [src]="item?.profilepic" style=" display: inline-block; width: 75px;height: 75px;">
                         </div>
@@ -71,5 +71,4 @@
             </li>
         </ul>
     </div>
-
 </div>

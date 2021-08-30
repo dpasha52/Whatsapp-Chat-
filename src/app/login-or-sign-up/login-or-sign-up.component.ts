@@ -28,7 +28,7 @@ export class LoginOrSignUpComponent implements OnInit {
     //this.authservice.CheckUserMetadata()
     this.authservice.userData.subscribe(data=>
       {
-        //this.authservice.SignOut();
+         //this.authservice.SignOut();
         if (data){
           console.log(data.email,"CHecking Email on init ")
           this.router.navigate(['app'])

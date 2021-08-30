@@ -20,6 +20,10 @@ export class RecentMessagesComponent implements OnInit,DoCheck {
   color:any;
 
   usermetadata:UserMetaData[]=[];
+  cuurentUser: any;
+  userinfo!: Users;
+  currentUsername!: string;
+  users_recent!: Users[];
 
 
   constructor(private fb: FirebaseService, private shareData:SharedataService, private getrecentusers:GetrecentusersService,
@@ -30,25 +34,57 @@ export class RecentMessagesComponent implements OnInit,DoCheck {
 
   ngOnInit(): void {
     console.log("Im in Oninit of recent chat");
-    let obsUsers: Observable<Users[]>=this.fb.getUsers() as Observable<Users[]>;
-      obsUsers.subscribe( data =>
+    this.authservice.userData.subscribe(cuurentUser=>{
+      this.cuurentUser=cuurentUser.email;
+      this.fb.getCurrentUser(this.cuurentUser).subscribe(data=>
       {
-         this.usersonInit=data
-      })
+        console.log("Getting current user")
+        this.userinfo= data[0];
+        this.currentUsername=this.userinfo.name;
+        console.log(this.userinfo,"Check data recieved ")
+        console.log(data[0],"Check data recieved ")
+          if(this.userinfo.contacts != undefined && this.userinfo.contacts.length>0){
+            console.log("check we are coming here")
+            console.log("we have contacts")
+            this.fb.getUsers().subscribe(users=>
+              {
 
-      let obsChats: Observable<Chats[]>=this.fb.getChats() as Observable<Chats[]>;
-        obsChats.subscribe(data=> {
-          this.chats = data;
+                this.usersonInit=users as Users[];
+                console.log('Part 1:',this.usersonInit)
+                this.usersonInit =this.usersonInit.filter(item=>(item.contacts != undefined && item.contacts.length > 0)
+                &&(item.email != this.cuurentUser )
+                  &&(item.contacts.includes(this.userinfo.email)||item.contacts.includes(this.userinfo.phonenumber)
+                  )
+                  )
+                console.log(this.usersonInit,"Users on init");
+
+                this.usersonInit.sort((a:Users,b:Users) =>{
+                  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                    if (nameA < nameB) {
+                      return -1;
+                    }
+                    if (nameA > nameB) {
+                      return 1;
+                    }
+                    // names must be equal
+                    return 0;
+                  })
+                  console.log(this.usersonInit)
 
 
-          this.authservice.userData.subscribe(data=>{
-            const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata ,currentuser:data.email as string};
+                  let obsChats: Observable<Chats[]>=this.fb.getChats() as Observable<Chats[]>;
+                  obsChats.subscribe(data=> {
+                    this.chats = data;
 
-            this.users = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? -1 : 1);
-          })
+                      const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata ,currentuser:this.currentUsername as string};
+                      this.users_recent = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? -1 : 1);
+                  })
+                })
+          }
+     })
+})
 
-
-        })
   }
   ngDoCheck(): void {
     // const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata };
