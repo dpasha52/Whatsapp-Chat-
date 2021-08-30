@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as firebase from 'firebase/compat';
 import { Observable } from 'rxjs';
 import { Chats, Users } from '../chatdata';
+import { AuthenticationService } from './authentication.service';
 
 // import * as firebase from 'firebase/compat';
 
@@ -14,13 +15,14 @@ export class FirebaseService {
   chats!: Chats[];
   users!:Users[];
 
-  constructor(private firestore: AngularFirestore) { }
-  getChats(){
-    // this.firestore.collection('Chats').valueChanges().subscribe(data=>
-    //   {
-    //     this.chats=data as Chats[];
-    //     console.log(this.chats)
-    //   });
+  constructor(private firestore: AngularFirestore,private authservice:AuthenticationService) { }
+
+    getChats(){
+      // this.firestore.collection('Chats').valueChanges().subscribe(data=>
+      //   {
+      //     this.chats=data as Chats[];
+      //     console.log(this.chats)
+      //   });
 
       return this.firestore.collection('Chats').valueChanges();
 
@@ -34,9 +36,13 @@ export class FirebaseService {
     return this.firestore.collection('Users').valueChanges();
   }
 
+  setUser(data:Users){
+    var val = this.firestore.collection('Users').add(data)
+    val.then(data=> console.log(data))
+  }
+
   setChats(data:Chats){
     // this.firestore.createId();
-
     var val = this.firestore.collection('Chats').add(data)
     val.then(data=> console.log(data))
     //console.log(data)
@@ -44,7 +50,7 @@ export class FirebaseService {
   }
 
   getCurrentUser(user:string){
-    return this.firestore.collection('Users', (ref) => ref.where('name', '==', 'dpasha52').limit(1)).valueChanges();
+    return this.firestore.collection('Users', (ref) => ref.where('email', '==', user ).limit(1)).valueChanges();
   }
 
 

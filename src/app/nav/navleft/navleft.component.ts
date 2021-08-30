@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Users } from 'src/app/chatdata';
+import { AuthenticationService } from 'src/app/common/authentication.service';
 import { FirebaseService } from 'src/app/common/firebase.service';
 
 
@@ -15,7 +16,7 @@ export class NavleftComponent implements OnInit {
   @Output() finishedLoading: EventEmitter<boolean>= new EventEmitter<boolean>();
   data: any;
   imgsrc!:string
-  constructor(private fb:FirebaseService) { }
+  constructor(private fb:FirebaseService,private authservice:AuthenticationService) { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
@@ -33,13 +34,22 @@ export class NavleftComponent implements OnInit {
  }
 getCurrentUserData()
 {
-  this.fb.getCurrentUser('dpasha52').subscribe(data=> {
-     this.data = data[0];
-     if(!! this.data.profilepic){
-      this.imgsrc=this.data.profilepic
-    }
 
-  } )
+
+  this.authservice.userData.subscribe(data=>
+    {
+      if (data){
+
+        this.fb.getCurrentUser(data.email).subscribe(data=> {
+          this.data = data[0];
+          if(!! this.data.profilepic){
+           this.imgsrc=this.data.profilepic
+         }
+        });
+      }
+    })
+
+
   // this.data = this.data as Users;
   // if(!!this.data.profilepic){
 
