@@ -37,8 +37,8 @@ export class NewchatComponent implements OnInit {
       let obsChats: Observable<Chats[]>=this.fb.getChats() as Observable<Chats[]>;
         obsChats.subscribe(data=> {
           this.chats = data;
-          const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata };
-          this.users_recent = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? -1 : 1);
+        //  const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata };
+         // this.users_recent = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? -1 : 1);
         })
   }
   tooglefunc(){

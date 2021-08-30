@@ -1,30 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Chats, UserMetaData, Users } from '../chatdata';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetrecentusersService {
 
-  constructor() { }
+constructor(private authservice:AuthenticationService) { }
 
 
-getLastMessageReturnActiveUsers(model:{users:Users[];chats:Chats[];usermetadata:UserMetaData[]}){
+  getLastMessageReturnActiveUsers(model:{users:Users[];chats:Chats[];usermetadata:UserMetaData[];currentuser:string}){
   let userArray:Users[]=[]
   let count = 0;
-
   model.users.forEach(user => {
     let array:Chats[]= []
     model.chats.forEach(chat => {
-      if((chat.to == 'dpasha52' && chat.from==user.name)
-            || (chat.from == 'dpasha52' && chat.to==user.name))
+      if((chat.to == model.currentuser  && chat.from==user.name)
+            || (chat.from == model.currentuser  && chat.to==user.name))
             {
-              if((chat.from == 'dpasha52' && chat.to==user.name))
+              if((chat.from == model.currentuser  && chat.to==user.name))
               {
                 count++
               }
               array.push(chat);
-
             }
     });
   if(array.length > 0){

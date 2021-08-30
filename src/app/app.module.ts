@@ -16,6 +16,7 @@ import { RecentMessagesComponent } from './recent-messages/recent-messages.compo
 import { ChatwindowComponent } from './chatwindow/chatwindow.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginOrSignUpComponent } from './login-or-sign-up/login-or-sign-up.component';
+import { SignUPComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoginOrSignUpComponent } from './login-or-sign-up/login-or-sign-up.comp
     NewchatComponent,
     RecentMessagesComponent,
     ChatwindowComponent,
-    LoginOrSignUpComponent
+    LoginOrSignUpComponent,
+    SignUPComponent
   ],
   imports: [
     BrowserModule,

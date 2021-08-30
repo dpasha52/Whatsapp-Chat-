@@ -1,6 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { Chats, UserMetaData, Users } from '../chatdata';
+import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
 import { GetrecentusersService } from '../common/getrecentusers.service';
 import { SharedataService } from '../common/sharedata.service';
@@ -21,7 +22,8 @@ export class RecentMessagesComponent implements OnInit,DoCheck {
   usermetadata:UserMetaData[]=[];
 
 
-  constructor(private fb: FirebaseService, private shareData:SharedataService, private getrecentusers:GetrecentusersService ) { }
+  constructor(private fb: FirebaseService, private shareData:SharedataService, private getrecentusers:GetrecentusersService,
+    private authservice: AuthenticationService ) { }
 
 
 
@@ -37,8 +39,14 @@ export class RecentMessagesComponent implements OnInit,DoCheck {
       let obsChats: Observable<Chats[]>=this.fb.getChats() as Observable<Chats[]>;
         obsChats.subscribe(data=> {
           this.chats = data;
-          const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata };
-          this.users = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? -1 : 1);
+
+
+          this.authservice.userData.subscribe(data=>{
+            const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata ,currentuser:data.email as string};
+
+            this.users = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? -1 : 1);
+          })
+
 
         })
   }
@@ -54,54 +62,6 @@ export class RecentMessagesComponent implements OnInit,DoCheck {
    //   this.callFunct('dpasha52',this.users[0].name,false);
     }
   }
-//returns active user chats and sets last message for each user
-
-  // getLastMessageReturnActiveUsers(users:Users[] ){
-  //   let userArray:Users[]=[]
-  //   let count = 0;
-  //   users.forEach(user => {
-  //     let array:Chats[]= []
-  //     this.chats.forEach(chat => {
-  //       if((chat.to == 'dpasha52' && chat.from==user.name)
-  //             || (chat.from == 'dpasha52' && chat.to==user.name))
-  //             {
-  //               if((chat.to == 'dpasha52' && chat.from==user.name))
-  //               {
-  //                 count++
-  //               }
-  //               array.push(chat);
-
-  //             }
-  //     });
-  //   if(array.length > 0){
-  //     let lastmessage = array[array.length-1].text as string;
-
-  //     var maximumDate = array.map(val=>val.timestamp)  ;
-  //     console.log(maximumDate[maximumDate.length-1]);
-
-  //     maximumDate.sort((a,b) => {
-  //       return a - b
-  //     })
-
-  //     let time = maximumDate[maximumDate.length-1].toDate() as Date;
-
-  //     if(!!lastmessage && !!time){
-  //       user.lastmessage=lastmessage;
-  //       user.time=time;
-  //       user.count= count;
-  //     }
-
-  //     if(count > 0){
-  //       userArray.push(user);
-  //       console.log(this.usermetadata)
-  //     }
-  //   }
-
-
-  //   });
-  //   return userArray;
-  // }
-
 
   callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string){
     let data:any= {
