@@ -1,7 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { count, take, takeLast } from 'rxjs/operators';
-import { Chats, UserMetaData, Users } from '../chatdata';
+import { chatfilterData, Chats, UserMetaData, Users } from '../chatdata';
 import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
 import { GetrecentusersService } from '../common/getrecentusers.service';
@@ -12,7 +12,7 @@ import { SharedataService } from '../common/sharedata.service';
   templateUrl: './recent-messages.component.html',
   styleUrls: ['./recent-messages.component.css']
 })
-export class RecentMessagesComponent implements OnInit,DoCheck {
+export class RecentMessagesComponent implements OnInit {
   count =0;
   cuurentUser!:string;
   userinfo!:Users;
@@ -95,19 +95,24 @@ export class RecentMessagesComponent implements OnInit,DoCheck {
 
                       this.recent_contact_list.push(element);
                     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    // function to push default chat to be loaded
+                    // this is important but onflicting with new chat
+                    // gets reset after click
+
+                    // let chatfilter={}as chatfilterData;
+                    // chatfilter.currentuser=this.cuurentUser
+                    // chatfilter.reciever=this.recent_contact_list[0].name
+                    // chatfilter.imgurl= this.recent_contact_list[0].profilepic
+                    // this.shareData.postdata(chatfilter)
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                       console.log(this.recent_contact_list)
                     })
 
-
-
-
                 })
 
-
               });
-
-
 
           })
     })
@@ -115,14 +120,9 @@ export class RecentMessagesComponent implements OnInit,DoCheck {
 
 
 
-  ngDoCheck(): void {
-
-  }
 
 
-  callInOninit(){
 
-  }
 
   callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string){
     let data:any= {

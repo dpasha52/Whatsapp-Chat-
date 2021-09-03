@@ -40,34 +40,36 @@ export class NewchatComponent implements OnInit {
       // console.log('part3 user on init', this.usersonInit)
      }
 
-    functSortByChat(contact: Users, username:string) {
-        // getting chats for each user
-        this.fb.getCombinatedChats(contact.name,username).subscribe( chatrecords=>{
-        //updating "last seen" "last message" and "username" for sorted userlist
-      //    this.count= chatrecords.length
+    // functSortByChat(contact: Users, username:string) {
+    //     // getting chats for each user
+    //     this.fb.getCombinatedChats(contact.name,username).subscribe( chatrecords=>{
+    //     //updating "last seen" "last message" and "username" for sorted userlist
+    //   //    this.count= chatrecords.length
 
-          //sort list by timestamp to get last seen
-          chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
-          //set last message
-          let lastmessage=chatrecords[chatrecords.length-1].text;
-          //Set Count for each user
+    //       //sort list by timestamp to get last seen
+    //       chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
+    //       //set last message
+    //       let lastmessage=chatrecords[chatrecords.length-1].text;
+    //       //Set Count for each user
 
-          contact.count = chatrecords.length
-          // set last message to be seen
-          contact.lastmessage=lastmessage;
-          contact.time=chatrecords[chatrecords.length-1].timestamp.toDate();
-          this.recent_contact_list.push(contact);
-        })
+    //       contact.count = chatrecords.length
+    //       // set last message to be seen
+    //       contact.lastmessage=lastmessage;
+    //       contact.time=chatrecords[chatrecords.length-1].timestamp.toDate();
+    //       this.recent_contact_list.push(contact);
+    //     })
 
-      //this.fb.getChats()
-    }
+
+    // }
 
 
  ngOnInit(): void {
     this.recent_contact_list=[]
     console.log("Im in Oninit of recent chat");
     // .pipe(take(1))
-            this.authservice.userData.subscribe(cuurentUser=>{
+
+    //need help in formatting this code
+    this.authservice.userData.subscribe(cuurentUser=>{
               this.cuurentUser=cuurentUser.email;
               // .pipe(take(1))
               this.fb.getCurrentUser(this.cuurentUser).subscribe( data=>
@@ -182,19 +184,3 @@ export class NewchatComponent implements OnInit {
   }
 }
 
-
-
-
-
-  // storageRef.child('images/' + file.name).put(file, metadata).then(function(snapshot) {
-  //   console.log('Uploaded', snapshot.totalBytes, 'bytes.');
-
-  //   let db = firebase.firestore();
-  //   let dbRef = db.collection("images").doc(file.name);
-
-  //   let setData = dbRef.set({
-  //       //yourdata here
-  //       downloadURl: snapshot.downloadURL
-  //   }).then( () => {
-  //       console.log("Data stored in Firestore!");
-  //   });
