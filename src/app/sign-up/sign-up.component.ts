@@ -6,6 +6,7 @@ import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import {User} from '@firebase/auth-types';
+import * as myGlobals from '../global'
 
 @Component({
   selector: 'app-sign-up',
@@ -37,7 +38,7 @@ export class SignUPComponent implements OnInit {
         console.log(data);
         var user:Users={} as Users;
         user.name=this.SignUpForm.controls['name'].value;
-        user.profilepic='https://firebasestorage.googleapis.com/v0/b/whatsappdemo-98c20.appspot.com/o/ProfilePics%2Fdefault_img.png?alt=media&token=b0358a10-18e2-403e-8fb0-22d959df1688'
+        user.profilepic=myGlobals.defalut_url;
         user.email=this.SignUpForm.controls['email_or_phone'].value;
         this.fb.setUser(user);
       }).catch(err=>{

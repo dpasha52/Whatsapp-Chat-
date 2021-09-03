@@ -1,7 +1,8 @@
-<div class="container" style="height: 80%; overflow-y:scroll;">
+<div class="container" style="height: 70%; overflow-y:scroll;">
     <div *ngFor="let item of chats_data">
         <div *ngIf="data">
             <br>
+            <!--  -->
             <div *ngIf="(item.from==data.currentuser && item.to==data.reciever)" class="message-blue">
                 <p class="message-content">{{item.text}}</p>
                 <div class="message-timestamp-left">{{item.timestamp.toDate() | date: 'shortTime'}}</div>

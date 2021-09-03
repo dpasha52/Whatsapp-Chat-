@@ -17,6 +17,8 @@ import { ChatwindowComponent } from './chatwindow/chatwindow.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginOrSignUpComponent } from './login-or-sign-up/login-or-sign-up.component';
 import { SignUPComponent } from './sign-up/sign-up.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { SignUPComponent } from './sign-up/sign-up.component';
     RecentMessagesComponent,
     ChatwindowComponent,
     LoginOrSignUpComponent,
-    SignUPComponent
+    SignUPComponent,
+    UpdateProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { SignUPComponent } from './sign-up/sign-up.component';
     AngularFirestoreModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

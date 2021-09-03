@@ -32,11 +32,11 @@
 }
 
 .pad-left {
-    height: 100vh;
+    /* height: 100%; */
     /* min-height: 100vh; */
-    /* height: auto;
+    /* height: auto;*/
     margin: 0;
-    overflow: auto;*/
+    overflow: auto;
     padding-left: 4%;
 }
 

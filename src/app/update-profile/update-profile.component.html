@@ -1,0 +1,55 @@
+<div class="background ">
+    <div class="container">
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="emp-profile">
+                <div class="row justify-content-center">
+                    <div class="">
+                        <div class="profile-img">
+                            <img [src]='imgsrc' alt="" />
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input formControlName="imagefile" #image type="file" name="file" (change)="changefile($event)" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+
+                    <div class="row profile-head" style="max-width: 319.453px;">
+                        <div class="col-md-12 col-12" style=" max-width: 319.453px; padding-top: 3%; padding-left: 5%; background-color:rgb(221, 211, 211);">
+                            <label style="display: block;">Name</label>
+
+                            <input formControlName="name" type="text" class="form-control" style="display:inline-block">
+                            <!-- <div class="input-group-append">
+                        <button *ngIf="button_writable" (click)="button_writable=!button_writable" class="fa fa-pencil rounded-circle pull-right" style="background: transparent;border: unset;"></button>
+                        <button *ngIf="!button_writable" (click)="Submit()" class="fa fa-check rounded-circle pull-right" style="background: transparent;border: unset;"></button>
+
+                    </div> -->
+                            <!-- <h5 [contentEditable]="!button_writable" style="max-width: 358.438px;">
+                        Kshiti Ghelani
+                    </h5> -->
+
+                            <!-- <button *ngIf="button_writable" (click)="button_writable=!button_writable" class="fa fa-pencil rounded-circle pull-right" style="background: transparent;border: unset;"></button>
+                    <button *ngIf="!button_writable" (click)="Submit()" class="fa fa-check rounded-circle pull-right" style="background: transparent;border: unset;"></button> -->
+
+                        </div>
+                        <div class="col-md-12 col-12" style=" padding-top: 3%; padding-left: 5%;background-color:rgb(221, 211, 211);">
+                            <label>Email</label>
+                            <input formControlName="email" type="text" class="form-control" style="display:inline-block">
+                        </div>
+                        <div class="col-md-12 col-12" style="padding-bottom: 5%; padding-top: 3%; padding-left: 5%; background-color:rgb(221, 211, 211);">
+                            <label>About</label>
+                            <input formControlName="about" type="text" class="form-control" style="display:inline-block">
+                        </div>
+                        <div class="col-md-12 col-12" style="padding-bottom: 3%; background-color:rgb(221, 211, 211);text-align: center;">
+                            <button type="submit" class="btn btn-outline-secondary"> Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

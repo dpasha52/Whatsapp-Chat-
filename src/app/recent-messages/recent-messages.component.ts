@@ -1,5 +1,6 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { from, Observable } from 'rxjs';
+import { count, take, takeLast } from 'rxjs/operators';
 import { Chats, UserMetaData, Users } from '../chatdata';
 import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
@@ -12,104 +13,123 @@ import { SharedataService } from '../common/sharedata.service';
   styleUrls: ['./recent-messages.component.css']
 })
 export class RecentMessagesComponent implements OnInit,DoCheck {
-  clickcount:number=0
-  obs!: Users[] | Observable<unknown[]>;
-  chats!: Chats[];
-  usersonInit!:Users[];
-  users!:Users[];
-  color:any;
+  count =0;
+  cuurentUser!:string;
+  userinfo!:Users;
+  currentUsername!:string;
+  contact_list=[] as Users[];
+  recent_contact_list =[] as Users[];
 
-  usermetadata:UserMetaData[]=[];
-  cuurentUser: any;
-  userinfo!: Users;
-  currentUsername!: string;
-  users_recent!: Users[];
-
+  lastmessage!: string;
 
   constructor(private fb: FirebaseService, private shareData:SharedataService, private getrecentusers:GetrecentusersService,
     private authservice: AuthenticationService ) { }
 
 
-
-
   ngOnInit(): void {
-    console.log("Im in Oninit of recent chat");
-    this.authservice.userData.subscribe(cuurentUser=>{
+
+
+
+
+    this.authservice.userData.pipe(take(1)).subscribe(cuurentUser=>{
       this.cuurentUser=cuurentUser.email;
-      this.fb.getCurrentUser(this.cuurentUser).subscribe(data=>
+
+      this.fb.getCurrentUser(this.cuurentUser).pipe(take(1)).subscribe( data=>
       {
-        console.log("Getting current user")
-        this.userinfo= data[0];
-        this.currentUsername=this.userinfo.name;
-        console.log(this.userinfo,"Check data recieved ")
-        console.log(data[0],"Check data recieved ")
-          if(this.userinfo.contacts != undefined && this.userinfo.contacts.length>0){
-            console.log("check we are coming here")
-            console.log("we have contacts")
-            this.fb.getUsers().subscribe(users=>
-              {
 
-                this.usersonInit=users as Users[];
-                console.log('Part 1:',this.usersonInit)
-                this.usersonInit =this.usersonInit.filter(item=>(item.contacts != undefined && item.contacts.length > 0)
-                &&(item.email != this.cuurentUser )
-                  &&(item.contacts.includes(this.userinfo.email)||item.contacts.includes(this.userinfo.phonenumber)
-                  )
-                  )
-                console.log(this.usersonInit,"Users on init");
+          console.log("Getting current user")
+          this.count++;
+          console.log(this.count,"how many times")
+          this.userinfo= data[0] ;
 
-                this.usersonInit.sort((a:Users,b:Users) =>{
-                  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-                  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-                    if (nameA < nameB) {
-                      return -1;
+          this.currentUsername=this.userinfo.name;
+          console.log(this.userinfo,"Check data recieved ")
+          console.log(data[0],"Check data recieved ")
+
+            console.log(this.userinfo.contacts,'user contacts')
+              let userinfocount=0;
+
+              this.userinfo.contacts.forEach( contact => {
+                userinfocount++;
+                console.log(userinfocount,'useinfocount')
+
+                contact.get().then((documntsnapshot: { data: () => Users; })=>{
+
+
+                  let element = documntsnapshot.data() as Users;
+
+                  let set = new Set();
+                  set.add(element)
+                  console.log(set, 'check the set ')
+
+                  // .pipe(take(2))
+                  let varcount =0
+                  this.fb.getCombinatedChats(element.name,this.currentUsername).subscribe( chatrecords=>{
+                    varcount++
+                    console.log( element.name,varcount,'check the set ')
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                      //screwed up logic revise !!important !!! not a fix
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                  if(this.recent_contact_list.includes(element)){
+                    let len =this.recent_contact_list.indexOf(element)
+                        this.recent_contact_list[len]=element
+
+                      chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
+                      this.recent_contact_list[len].time=chatrecords[chatrecords.length-1].timestamp.toDate();
+                      this.recent_contact_list[len].count=chatrecords.length;
+                      this.recent_contact_list[len].lastmessage=chatrecords[chatrecords.length-1].text;
+                    } else{
+
+                      chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
+                      //set last message
+                      this.lastmessage=chatrecords[chatrecords.length-1].text;
+                      //Set Count for each user
+
+                      element.count= chatrecords.length
+                      // set last message to be seen
+                      element.lastmessage=this.lastmessage;
+                      element.time=chatrecords[chatrecords.length-1].timestamp.toDate();
+
+                      this.recent_contact_list.push(element);
                     }
-                    if (nameA > nameB) {
-                      return 1;
-                    }
-                    // names must be equal
-                    return 0;
-                  })
-                  console.log(this.usersonInit)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                      console.log(this.recent_contact_list)
+                    })
 
 
-                  let obsChats: Observable<Chats[]>=this.fb.getChats() as Observable<Chats[]>;
-                  obsChats.subscribe(data=> {
-                    this.chats = data;
 
-                      const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata ,currentuser:this.currentUsername as string};
-                      this.users_recent = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? -1 : 1);
-                  })
+
                 })
-          }
-     })
-})
 
+
+              });
+
+
+
+          })
+    })
   }
+
+
+
   ngDoCheck(): void {
-    // const passvar = { users:this.usersonInit , chats: this.chats,usermetadata:this.usermetadata };
-    // this.users = this.getrecentusers.getLastMessageReturnActiveUsers(passvar).sort((a, b) => (a.count > b.count) ? 1 : -1);
 
   }
 
 
   callInOninit(){
-    if(this.users && this.clickcount==0){
-   //   this.callFunct('dpasha52',this.users[0].name,false);
-    }
+
   }
 
   callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string){
     let data:any= {
     currentuser,reciever,imgurl
     }
-    this.shareData.postData(data);
-    if(clicked){
-      this.clickcount++
-    }
-    // if(!clicked){
-    //   this.callInOninit();
-    // }
+    this.shareData.postdata(data);
+
   }
 
 

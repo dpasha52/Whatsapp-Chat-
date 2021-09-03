@@ -21,7 +21,7 @@
     <br>
     <div class="card ">
         <ul class="list-group list-group-flush ">
-            <li *ngFor="let item of users_recent" class="list-group-item">
+            <li *ngFor="let item of recent_contact_list" class="list-group-item">
                 <a class="anchormod">
                     <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
                         <div class="col-md-2" style="padding-bottom: 20px;">
@@ -49,7 +49,7 @@
     <br>
     <div class="card ">
         <ul class="list-group list-group-flush ">
-            <li *ngFor="let item of usersonInit" class="list-group-item">
+            <li *ngFor="let item of contact_list" class="list-group-item">
                 <a class="anchormod">
                     <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
                         <div class="col-md-2" style="padding-bottom: 20px;">

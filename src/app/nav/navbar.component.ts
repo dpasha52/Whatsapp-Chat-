@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
 
 
   toggleflag: boolean = true;
-  hasLoaded:boolean = false;
+  hasLoaded:boolean = true;
   CurrentUserEmail!:string;
   CurrentUserData!:Users;
 
@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     console.log( 'app component',this.toggleflag)
-
+    this.toggleflag = true
     this.authservice.userData.subscribe(userinfo=>
         this.CurrentUserEmail=userinfo.email
     )
@@ -30,11 +30,6 @@ export class NavbarComponent implements OnInit {
         this.CurrentUserData=data[0])
 
     this.loadContacts();
-
-
-
-
-
 
   }
   loadContacts(){

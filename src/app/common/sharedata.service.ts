@@ -1,29 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { chatfilterData } from '../chatdata';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedataService {
 
-  constructor() { }
-  data:any;
+    data:chatfilterData={} as chatfilterData
+    private messageSource = new BehaviorSubject(this.data);
+    currentMessage = this.messageSource.asObservable();
 
+    constructor() { }
 
-
-  postData(input:any){
-    //console.log("recieved input data")
-    this.data = input;
-    //console.log("this.data:",this.data)
-  }
-
-  recieveData(){
-    if(this.data){
-      console.log("Returning recieved data ")
-      return this.data;
+    postdata(message: any) {
+      this.messageSource.next(message)
     }
-    else{
-      return null;
-    }
-  }
+
 }

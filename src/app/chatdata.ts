@@ -9,15 +9,17 @@ export interface Chats{
 }
 
 export interface Users{
+  customID:string,
   name:string,
   //messageIds:string[],
-  contacts:string[],
+  contacts:any[],
   lastmessage?:string,
   time?:any,
   count:number,
   profilepic:string,
   email:string,
-  phonenumber:string
+  phonenumber:string,
+  about:string,
 }
 
 
@@ -28,7 +30,8 @@ export interface UserMetaData{
 
 export interface chatfilterData{
   currentuser:string,
-  reciever:string
+  reciever:string,
+  imgurl:string
 }
 
 //for later

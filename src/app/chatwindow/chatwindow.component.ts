@@ -1,5 +1,5 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { AfterContentInit, Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, DoCheck, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as firebase from 'firebase/compat';
 import { Observable } from 'rxjs';
 import { chatfilterData, Chats } from '../chatdata';
@@ -12,7 +12,7 @@ import { SharedataService } from '../common/sharedata.service';
   styleUrls: ['./chatwindow.component.css']
 })
 
-export class ChatwindowComponent implements OnInit ,DoCheck,AfterContentInit,OnChanges{
+export class ChatwindowComponent implements OnInit{
 /////////////////  Submit Data
 text_submit:string=""
 
@@ -24,67 +24,49 @@ text_submit:string=""
   chats_data?:Chats[]
 
 
-  constructor(private sharedService:SharedataService,private fb:FirebaseService) { }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes,"changes check ")
 
-  }
+  constructor(private sharedService:SharedataService,private fb:FirebaseService,private zone:NgZone) {
+    this.sharedService.currentMessage.subscribe(data => {
+        this.data=data as chatfilterData;
+        if(this.data.currentuser!= undefined){
+            this.ngOnInit();
+        }
+
+    })
+   }
+
+
   ngAfterContentInit(): void {
 
   }
 
 
-  ngDoCheck(): void {
-    console.log("docheck in docheck");
+  ngOnInit(): void {
 
-    this.data = this.getfuncData() as chatfilterData;
-    this.chats_data=this.records;
+      if(this.data.currentuser!= undefined){
+      let obsChats1: Observable<Chats[]>=this.fb.getCombinatedChats(this.data.currentuser,this.data.reciever) as Observable<Chats[]>;
 
-    console.log(this.data,"check it out")
-    console.log(this.records,"Check it yo")
+      obsChats1.subscribe((data)=> {
+        this.records = data;
+        this.chats_data = data;
 
-    if(this.data){
-      console.log("this.data", this.data)
-
-      let chats_data =this.records.filter(chat =>
-        ((chat.from==this.data.currentuser && chat.to == this.data.reciever) ||
-        (chat.from==this.data.reciever && chat.to== this.data.currentuser))
-      )
-      this.chats_data = chats_data.sort((a,b) => {
-        return a.timestamp - b.timestamp
+        let sorted=this.chats_data.sort((a,b)=>a.timestamp.toDate()-b.timestamp.toDate())
+        console.log(sorted as Chats[])
       })
     }
   }
 
-  ngOnInit(): void {
-
-
-      console.log("whats inside")
-      this.data = {currentuser:'clah',reciever:'ha'}
-      console.log("filtershit",this.data)
-
-      let obsChats: Observable<Chats[]>=this.fb.getChats() as Observable<Chats[]>;
-      obsChats.subscribe((data)=> {
-        this.records = data;
-        this.chats_data = data;
-        console.log(this.records as Chats[])
-      })
-  }
-
-  getfuncData()
-  {
-    return this.sharedService.recieveData();
-  }
 
   submitFunction(){
 
     var chat:Chats={} as Chats;
     if(!!this.text_submit){
       chat.from=this.data.currentuser;
+
       chat.text=this.text_submit;
       chat.to=this.data.reciever;
+
       chat.timestamp= new Date();
-      console.log(chat,"Sending firebase data");
       this.fb.setChats(chat);
     }
 
@@ -92,3 +74,5 @@ text_submit:string=""
 
 
   }
+
+

@@ -1,30 +1,53 @@
 <div class="max-height">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-success">
-        <img *ngIf="imgsrc" class=" rounded-circle " style="width: 82px;" [src]='imgsrc' alt="not availabe">
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"></button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
+    <div *ngIf="togglevar">
+        <!-- -->
+        <nav class="navbar navbar-expand-sm navbar-dark bg-success">
 
-            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <!-- (click)="updatProfile()" -->
+            <img class=" rounded-circle " style="width: 82px;" [src]='imgsrc' alt="not availabe" (click)=navigatefunc()>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"></button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
 
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fa fa-commenting-o fa-2x" (click)="openNewMessageComponent()" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fa fa-circle-o-notch fa-2x" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-                    </a>
-                </li>
+                <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 
-            </ul>
-        </div>
-    </nav>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa fa-commenting-o fa-2x" (click)="openNewMessageComponent()" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa fa-circle-o-notch fa-2x" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+                        </a>
+                    </li>
 
-    <app-recent-messages style="background-color:#d4cece ;"></app-recent-messages>
+                </ul>
+            </div>
+        </nav>
+
+        <app-recent-messages style="overflow-y: scroll; background-color:#d4cece ;"></app-recent-messages>
+    </div>
+    <!-- <div class="max-height justify-content-center" *ngIf="!togglevar" (click)="updatProfile()">
+
+        <li class="list-group-item ">Dapibus ac facilisis in</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+        <li class="list-group-item ">Dapibus ac facilisis in</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+        <li class="list-group-item ">Dapibus ac facilisis in</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+        <li class="list-group-item ">Dapibus ac facilisis in</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+        <li class="list-group-item ">Dapibus ac facilisis in</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+
+
+    </div> -->
+
 </div>

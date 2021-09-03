@@ -27,6 +27,8 @@ constructor(private authservice:AuthenticationService) { }
             }
     });
   if(array.length > 0){
+
+    array.sort((a,b)=>a.timestamp-b.timestamp)
     let lastmessage = array[array.length-1].text as string;
 
     var maximumDate = array.map(val=>val.timestamp)  ;

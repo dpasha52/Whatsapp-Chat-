@@ -1,7 +1,8 @@
 <div class="row ">
+    <!-- (finishedLoading)="hasLoaded = $event" -->
+    <app-navleft class="nav-pad col-md-4" *ngIf="toggleflag" [(toggletrue)]="toggleflag"></app-navleft>
 
-    <app-navleft class="nav-pad col-md-4" (finishedLoading)="hasLoaded = $event" *ngIf="toggleflag" [(toggletrue)]="toggleflag"></app-navleft>
     <app-newchat class="nav-pad col-md-4" *ngIf="!toggleflag" [(toggletrue)]="toggleflag"></app-newchat>
-    <app-navright class="nav-pad col-md-8" *ngIf="hasLoaded"></app-navright>
-
+    <app-navright *ngIf="hasLoaded" class="nav-pad col-md-8"></app-navright>
+    <!--  -->
 </div>

@@ -1,4 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
+import { chatfilterData } from 'src/app/chatdata';
 import { SharedataService } from 'src/app/common/sharedata.service';
 
 @Component({
@@ -11,13 +12,15 @@ export class NavrightComponent implements OnInit,DoCheck{
   imgurl!:string;
   constructor( private service:SharedataService) { }
   ngDoCheck(): void {
-    let data:any=this.service.recieveData();
-     this.imgurl = data.imgurl as string;
+
+     //this.imgurl = data.imgurl as string;
   }
 
   ngOnInit(): void {
-    let data:any=this.service.recieveData();
-     this.imgurl = data.imgurl as string;
+    this.service.currentMessage.subscribe(data=>{
+     this.imgurl = data.imgurl
+    })
+
   }
 
 }

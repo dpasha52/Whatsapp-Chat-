@@ -1,88 +1,91 @@
-<div class="pad-left container " style="height: 100%;overflow-y:scroll; background-color:#d4cece ; height:87%">
-    <br>
-    <br>
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
+<!-- height:87% -->
+<div class="pad-left container " style="height: 80vh ;display: block;  background-color:#d4cece ;">
+    <div>
+        <br>
+        <br>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
 
-            <i class="input-group-text fa fa-search" aria-hidden="true"></i>
+                <i class="input-group-text fa fa-search" aria-hidden="true"></i>
+            </div>
+            <input type="text" class="form-control" placeholder="Search Contact" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
         </div>
-        <input type="text" class="form-control" placeholder="Search Contact" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-    </div>
 
-    <!-- (click)="getLastMessage()"" -->
-    <h2>Recent Contacts</h2>
 
-    <div class="card ">
-        <ul class="list-group list-group-flush ">
-            <li *ngFor="let item of users_recent" class="list-group-item">
-                <a class="anchormod">
-                    <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
-                        <div class="col-md-2" style="padding-bottom: 20px;">
-                            <img *ngIf="item.profilepic" class="rounded-circle" [src]="item?.profilepic" style=" display: inline-block; width: 75px;height: 75px;">
-                        </div>
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <h3 style="display: inline-block;padding-left: 0px;"> {{item.name}} </h3>
-                                    <p> {{item?.lastmessage}}</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p style="text-align:right; padding-top: 60px;">{{ item?.time | date: 'shortTime' }} <i class="fa fa-circle" aria-hidden="true"></i></p>
+        <h2>Recent Contacts</h2>
+
+        <div class="card ">
+            <ul class="list-group list-group-flush ">
+                <li *ngFor="let item of recent_contact_list" class="list-group-item">
+                    <a class="anchormod">
+                        <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
+                            <div class="col-md-2" style="padding-bottom: 20px;">
+                                <img *ngIf="item.profilepic" class="rounded-circle" [src]="item?.profilepic" style=" display: inline-block; width: 75px;height: 75px;">
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <h3 style="display: inline-block;padding-left: 0px;"> {{item.name}} </h3>
+                                        <p> {{item?.lastmessage}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p style="text-align:right; padding-top: 60px;">{{ item?.time | date: 'shortTime' }} <i class="fa fa-circle" aria-hidden="true"></i></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
-            <li class="list-group-item ">Dapibus ac facilisis in</li>
-            <li class="list-group-item ">Vestibulum at eros</li>
+                    </a>
+                </li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Vestibulum at eros</li>
+            </ul>
+        </div>
 
-        </ul>
     </div>
 </div>
