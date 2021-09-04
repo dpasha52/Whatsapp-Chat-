@@ -1,74 +1,65 @@
-<div class="pad-left container " style=" height: 100%;overflow-y:auto; background-color:#d4cece ;">
+<div class="container-fluid" style="padding-right: 0%;">
 
-    <div class="row title-padding">
-        <div class="col-md-6 arrow-padding">
-            <i class="fa fa-long-arrow-left fa-3x" (click)="tooglefunc()"></i>
-        </div>
-        <div class="col-md-6 ">
-            <h2>New Chat</h2>
-        </div>
-    </div>
+    <div class="">
+        <div class="chat">
+            <div class="card  contacts_card">
+                <div class="row">
+                    <div style="text-align: center;" class="col-md-2">
+                        <i style="display: inline-block;" (click)="tooglefunc()" class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                    </div>
+                    <div style="text-align: center;" class="col-md-10">
+                        <h4 style="display: inline-block;">NewChat</h4>
+                    </div>
+                </div>
 
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
+                <div style="text-align: center;">
 
-            <i class="input-group-text fa fa-search" aria-hidden="true"></i>
-        </div>
-        <input type="text" class="form-control" placeholder="Search Contact" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-    </div>
 
-    <h2>Most Contacted</h2>
-    <br>
-    <div class="card ">
-        <ul class="list-group list-group-flush ">
-            <li *ngFor="let item of recent_contact_list" class="list-group-item">
-                <a class="anchormod">
-                    <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
-                        <div class="col-md-2" style="padding-bottom: 20px;">
-                            <img *ngIf="item.profilepic" class="rounded-circle" [src]="item?.profilepic" style=" display: inline-block; width: 75px;height: 75px;">
-                        </div>
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <h3 style="display: inline-block;padding-left: 0px;"> {{item.name}} </h3>
-                                    <p> {{item?.lastmessage}}</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p style="text-align:right; padding-top: 60px;">{{ item?.time | date: 'shortTime' }} <i class="fa fa-circle" aria-hidden="true"></i></p>
-                                </div>
-                            </div>
+                </div>
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..." name="" class="form-control search">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text search_btn"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <br>
-    <br>
-    <h2>Contact List</h2>
-    <br>
-    <div class="card ">
-        <ul class="list-group list-group-flush ">
-            <li *ngFor="let item of contact_list" class="list-group-item">
-                <a class="anchormod">
-                    <div class="row" (click)="callFunct(currentUsername,item.name,true,item.profilepic)">
-                        <div class="col-md-2" style="padding-bottom: 20px;">
-                            <img *ngIf="item.profilepic" class="rounded-circle" [src]="item?.profilepic" style=" display: inline-block; width: 75px;height: 75px;">
-                        </div>
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <h3 style="display: inline-block;padding-left: 0px;"> {{item.name}} </h3>
-                                    <p> {{item?.lastmessage}}</p>
+                </div>
+
+
+                <div class="card-body contacts_body">
+                    <ul class="contacts">
+                        <h5 style="text-align: center;">#Frequently contacted</h5>
+                        <li *ngFor="let item of recent_contact_list">
+                            <div (click)="callFunct(currentUsername,item.name,true,item.profilepic)" class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img *ngIf="item.profilepic" [src]="item?.profilepic" class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
                                 </div>
-                                <div class="col-md-3">
-                                    <p style="text-align:right; padding-top: 60px;">{{ item?.time | date: 'shortTime' }} <i class="fa fa-circle" aria-hidden="true"></i></p>
+                                <div class="user_info">
+                                    <span>{{item.name}}</span>
+                                    <p style="font-size: 15px;">{{item?.lastmessage}} </p>
+                                    <p>{{ item?.time | date: 'shortTime' }}</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </a>
-            </li>
-        </ul>
+                        </li>
+                        <li>
+                            #
+                        </li>
+                        <li *ngFor="let item of contact_list">
+                            <div (click)="callFunct(currentUsername,item.name,true,item.profilepic)" class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img *ngIf="item.profilepic" [src]="item?.profilepic" class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>{{item.name}}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
     </div>
 </div>

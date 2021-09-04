@@ -1,8 +1,47 @@
-<div class="container" style="height: 70%; overflow-y:scroll;">
+<div class="chat">
+    <div class="card">
+        <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="card-body msg_card_body">
+            <div *ngFor="let item of chats_data">
+                <div *ngIf="data" class="d-flex justify-content-start mb-4">
+                    <div class="img_cont_msg">
+                    </div>
+                    <div *ngIf="(item.from==data.currentuser && item.to==data.reciever)" class="msg_cotainer">
+                        {{item.text}}
+                        <span class="msg_time">{{item.timestamp.toDate() | date: 'shortTime'}}</span>
+                    </div>
+                </div>
+                <div *ngIf="data" class="d-flex justify-content-end mb-4">
+                    <div *ngIf="(item.from==data.reciever && item.to == data.currentuser)" class="msg_cotainer_send">
+                        {{item.text}}
+                        <span class="msg_time_send">{{item.timestamp.toDate() | date: 'shortTime'}}</span>
+                    </div>
+                    <div class="img_cont_msg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form (ngSubmit)="submitFunction()" #form="ngForm">
+            <div class="card-footer">
+                <div class="input-group">
+
+                    <div class="input-group-append">
+                        <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
+                    </div>
+                    <input name="blah" #inputTextBox [(ngModel)]="text_submit" class="form-control type_msg" placeholder="Type your message...">
+                    <div class="input-group-append">
+                        <button (click)="inputTextBox.value=''" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<!-- <div class="container" style="height: 70%; overflow-y:scroll;">
     <div *ngFor="let item of chats_data">
         <div *ngIf="data">
             <br>
-            <!--  -->
             <div *ngIf="(item.from==data.currentuser && item.to==data.reciever)" class="message-blue">
                 <p class="message-content">{{item.text}}</p>
                 <div class="message-timestamp-left">{{item.timestamp.toDate() | date: 'shortTime'}}</div>
@@ -30,6 +69,6 @@
             <button (click)="inputTextBox.value=''" class="rounded-circle" style="background-color: rgb(245, 223, 223);">
   <i class="fa fa-plane" aria-hidden="true"></i>
 </button>
-        </div>
-    </div>
-</form>
+                    </div>
+                </div>
+        </form> -->

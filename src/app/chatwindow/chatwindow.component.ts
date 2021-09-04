@@ -1,5 +1,5 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { AfterContentInit, Component, DoCheck, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, DoCheck, ElementRef, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as firebase from 'firebase/compat';
 import { Observable } from 'rxjs';
 import { chatfilterData, Chats } from '../chatdata';
@@ -13,32 +13,22 @@ import { SharedataService } from '../common/sharedata.service';
 })
 
 export class ChatwindowComponent implements OnInit{
-/////////////////  Submit Data
-text_submit:string=""
-
-
-//////////////////////////////
+  /////////////////  Submit Data
+  text_submit:string=""
+  //////////////////////////////
 
   data!:chatfilterData
   records!:Chats[]
   chats_data?:Chats[]
 
-
-
-  constructor(private sharedService:SharedataService,private fb:FirebaseService,private zone:NgZone) {
+  constructor(private sharedService:SharedataService,private fb:FirebaseService,private elementref:ElementRef) {
     this.sharedService.currentMessage.subscribe(data => {
         this.data=data as chatfilterData;
         if(this.data.currentuser!= undefined){
             this.ngOnInit();
         }
-
     })
    }
-
-
-  ngAfterContentInit(): void {
-
-  }
 
 
   ngOnInit(): void {
@@ -52,13 +42,14 @@ text_submit:string=""
 
         let sorted=this.chats_data.sort((a,b)=>a.timestamp.toDate()-b.timestamp.toDate())
         console.log(sorted as Chats[])
+
       })
     }
+
   }
 
 
   submitFunction(){
-
     var chat:Chats={} as Chats;
     if(!!this.text_submit){
       chat.from=this.data.currentuser;
@@ -73,6 +64,6 @@ text_submit:string=""
   }
 
 
-  }
+}
 
 

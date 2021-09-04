@@ -1,24 +1,33 @@
-<div class="nav-pad take-height">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
-        <img *ngIf="imgurl" class=" rounded-circle" style="width: 94px;" [src]='imgurl' alt="not availabe">
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-
-            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-                    </a>
-                </li>
-            </ul>
+<div class="chat">
+    <div class="blah">
+        <div class="card-header msg_head">
+            <div class="d-flex bd-highlight">
+                <div *ngIf="imgurl" class="img_cont">
+                    <img [src]='imgurl' class="rounded-circle user_img">
+                    <span class="online_icon"></span>
+                </div>
+                <!-- *ngIf="data" -->
+                <!-- <div class="user_info">
+                    <p></p> -->
+                <!-- {{data.reciever}} -->
+                <!-- </div> -->
+                <div *ngIf="imgurl" class="video_cam">
+                    <span><i class="fa fa-video"></i></span>
+                    <span><i class="fa fa-phone"></i></span>
+                </div>
+            </div>
+            <span id="action_menu_btn"><i class="fa fa-ellipsis-v"></i></span>
+            <!-- <div class="action_menu">
+        <ul>
+            <li><i class="fas fa-user-circle"></i> View profile</li>
+            <li><i class="fas fa-users"></i> Add to close friends</li>
+            <li><i class="fas fa-plus"></i> Add to group</li>
+            <li><i class="fas fa-ban"></i> Block</li>
+        </ul>
+    </div> -->
         </div>
-    </nav>
+    </div>
+
     <app-chatwindow></app-chatwindow>
+
 </div>
