@@ -20,6 +20,10 @@ import { SignUPComponent } from './sign-up/sign-up.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
+// import * as firebase from 'firebase/compat';
+
+// firebase.initializeApp(environment.firebase);
+
 @NgModule({
   declarations: [
     AppComponent,

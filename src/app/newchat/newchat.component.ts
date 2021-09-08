@@ -6,6 +6,8 @@ import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
 import { GetrecentusersService } from '../common/getrecentusers.service';
 import { SharedataService } from '../common/sharedata.service';
+import { DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-newchat',
@@ -33,34 +35,11 @@ export class NewchatComponent implements OnInit {
   constructor(private fb:FirebaseService,
     private shareData:SharedataService,
     private getrecentusers:GetrecentusersService,
-     private authservice:AuthenticationService) { }
+     private authservice:AuthenticationService,
+     private angf:AngularFirestore
+     ) { }
 
 
-     demofunc(){
-      // console.log('part3 user on init', this.usersonInit)
-     }
-
-    // functSortByChat(contact: Users, username:string) {
-    //     // getting chats for each user
-    //     this.fb.getCombinatedChats(contact.name,username).subscribe( chatrecords=>{
-    //     //updating "last seen" "last message" and "username" for sorted userlist
-    //   //    this.count= chatrecords.length
-
-    //       //sort list by timestamp to get last seen
-    //       chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
-    //       //set last message
-    //       let lastmessage=chatrecords[chatrecords.length-1].text;
-    //       //Set Count for each user
-
-    //       contact.count = chatrecords.length
-    //       // set last message to be seen
-    //       contact.lastmessage=lastmessage;
-    //       contact.time=chatrecords[chatrecords.length-1].timestamp.toDate();
-    //       this.recent_contact_list.push(contact);
-    //     })
-
-
-    // }
 
 
  ngOnInit(): void {
@@ -90,9 +69,9 @@ export class NewchatComponent implements OnInit {
                       this.userinfo.contacts.forEach( contact => {
                         userinfocount++;
                         console.log(userinfocount,'useinfocount')
+                        //contact =`Users/${contact}` as unknown as DocumentReference
 
-                        contact.get().then((documntsnapshot: { data: () => Users; })=>{
-
+                        this.angf.firestore.doc(`Users/${contact}`).get().then(documntsnapshot=>{
 
                           let element = documntsnapshot.data() as Users;
 
@@ -116,7 +95,7 @@ export class NewchatComponent implements OnInit {
                             varcount++
                             console.log( element.name,varcount,'check the set ')
 
-
+                            if(chatrecords.length !=0){
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                               //screwed up logic revise !!important !!! not a fix
                         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,6 +125,7 @@ export class NewchatComponent implements OnInit {
                             }
                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             this.recent_contact_list.sort((a,b)=>b.count - a.count)
+                          }
                             console.log(this.recent_contact_list)
                             })
 

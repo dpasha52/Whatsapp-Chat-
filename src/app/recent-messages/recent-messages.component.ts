@@ -6,6 +6,8 @@ import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
 import { GetrecentusersService } from '../common/getrecentusers.service';
 import { SharedataService } from '../common/sharedata.service';
+import { DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-recent-messages',
@@ -23,7 +25,7 @@ export class RecentMessagesComponent implements OnInit {
   lastmessage!: string;
 
   constructor(private fb: FirebaseService, private shareData:SharedataService, private getrecentusers:GetrecentusersService,
-    private authservice: AuthenticationService ) { }
+    private authservice: AuthenticationService,private angf:AngularFirestore ) { }
 
 
   ngOnInit(): void {
@@ -52,10 +54,9 @@ export class RecentMessagesComponent implements OnInit {
               this.userinfo.contacts.forEach( contact => {
                 userinfocount++;
                 console.log(userinfocount,'useinfocount')
+                //contact =`Users/${contact}` as unknown as DocumentReference
 
-                contact.get().then((documntsnapshot: { data: () => Users; })=>{
-
-
+                this.angf.firestore.doc(`Users/${contact}`).get().then(documntsnapshot=>{
                   let element = documntsnapshot.data() as Users;
 
                   let set = new Set();
@@ -72,29 +73,31 @@ export class RecentMessagesComponent implements OnInit {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                       //screwed up logic revise !!important !!! not a fix
                 /////////////////////////////////////////////////////////////////////////////////////////////
+                  if(chatrecords.length !=0){
+                    if(this.recent_contact_list.includes(element)){
+                      let len =this.recent_contact_list.indexOf(element)
+                          this.recent_contact_list[len]=element
 
-                  if(this.recent_contact_list.includes(element)){
-                    let len =this.recent_contact_list.indexOf(element)
-                        this.recent_contact_list[len]=element
+                        chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
+                        this.recent_contact_list[len].time=chatrecords[chatrecords.length-1].timestamp.toDate();
+                        this.recent_contact_list[len].count=chatrecords.length;
+                        this.recent_contact_list[len].lastmessage=chatrecords[chatrecords.length-1].text;
+                      } else{
 
-                      chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
-                      this.recent_contact_list[len].time=chatrecords[chatrecords.length-1].timestamp.toDate();
-                      this.recent_contact_list[len].count=chatrecords.length;
-                      this.recent_contact_list[len].lastmessage=chatrecords[chatrecords.length-1].text;
-                    } else{
+                        chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
+                        //set last message
+                        this.lastmessage=chatrecords[chatrecords.length-1].text;
+                        //Set Count for each user
 
-                      chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
-                      //set last message
-                      this.lastmessage=chatrecords[chatrecords.length-1].text;
-                      //Set Count for each user
+                        element.count= chatrecords.length
+                        // set last message to be seen
+                        element.lastmessage=this.lastmessage;
+                        element.time=chatrecords[chatrecords.length-1].timestamp.toDate();
 
-                      element.count= chatrecords.length
-                      // set last message to be seen
-                      element.lastmessage=this.lastmessage;
-                      element.time=chatrecords[chatrecords.length-1].timestamp.toDate();
+                        this.recent_contact_list.push(element);
+                      }
 
-                      this.recent_contact_list.push(element);
-                    }
+                  }
 
                     // function to push default chat to be loaded
                     // this is important but onflicting with new chat

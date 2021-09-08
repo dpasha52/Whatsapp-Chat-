@@ -34,6 +34,13 @@ export interface chatfilterData{
   imgurl:string
 }
 
+export interface contact {
+  name:string,
+  email?:string,
+  phonenumber?:string,
+  profilepic?:string
+}
+
 //for later
 
 // <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
