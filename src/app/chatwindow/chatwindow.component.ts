@@ -1,8 +1,9 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { AfterContentInit, Component, DoCheck, ElementRef, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as firebase from 'firebase/compat';
 import { Observable } from 'rxjs';
-import { chatfilterData, Chats } from '../chatdata';
+import { chatfilterData, Chats, Users } from '../chatdata';
 import { FirebaseService } from '../common/firebase.service';
 import { SharedataService } from '../common/sharedata.service';
 
@@ -21,7 +22,7 @@ export class ChatwindowComponent implements OnInit{
   records!:Chats[]
   chats_data?:Chats[]
 
-  constructor(private sharedService:SharedataService,private fb:FirebaseService,private elementref:ElementRef) {
+  constructor(private sharedService:SharedataService,private fb:FirebaseService,private elementref:ElementRef,private ngf:AngularFirestore) {
     this.sharedService.currentMessage.subscribe(data => {
         this.data=data as chatfilterData;
         if(this.data.currentuser!= undefined){
@@ -49,16 +50,32 @@ export class ChatwindowComponent implements OnInit{
   }
 
 
-  submitFunction(){
+  async submitFunction(){
     var chat:Chats={} as Chats;
     if(!!this.text_submit){
       chat.from=this.data.currentuser;
 
       chat.text=this.text_submit;
       chat.to=this.data.reciever;
-
       chat.timestamp= new Date();
+      let userdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.to).limit(1).get()
+      let user = userdocdata.docs[0].data() as Users
+      let curruserdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.from).limit(1).get();
+      let curruser = curruserdocdata.docs[0].data() as Users
+
+      if (!user.contacts.includes(curruser.customID)){
+        //add unknown users
+          if(!user.unknowncontacts){
+            user.unknowncontacts=[]
+            user.unknowncontacts.push(curruser.customID)
+          }else{
+            user.unknowncontacts.push(curruser.customID)
+          }
+      }
+
       this.fb.setChats(chat);
+
+
     }
 
   }

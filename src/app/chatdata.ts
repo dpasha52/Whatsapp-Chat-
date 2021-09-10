@@ -20,6 +20,7 @@ export interface Users{
   email:string,
   phonenumber:string,
   about:string,
+  unknowncontacts?:any[]
 }
 
 

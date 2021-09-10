@@ -11,6 +11,7 @@ import { defalut_url } from '../global';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collection, query, where, getDocs } from "firebase/firestore";
+import firebase from 'firebase/compat';
 
 declare var  gapi: any;
 // function initClient() {
@@ -77,11 +78,12 @@ export class LoginOrSignUpComponent implements OnInit {
         }
         userloggedin.contacts=contacts
         this.createUser(userloggedin);
+
       }
   )
 
     console.log(userloggedin,"Loggged in user")
-    this.router.navigate(['app'])
+
 }
 
 
@@ -92,24 +94,26 @@ export class LoginOrSignUpComponent implements OnInit {
     let obs=this.fire.collection('Users',(ref) => ref.where('email', '==', userloggedin.email).limit(1)).get()
     obs.subscribe(async curruser=>{
       if(curruser.size==0){
-        //add contact with out updating contacts
+        //add contact with out adding contacts
         //let adduser = userloggedin
         var clonedObj = Object.assign({}, userloggedin);
         clonedObj.contacts = []
 
+        //let refid = await this.fire.collection('Users').add(clonedObj)
+        //let docdata = await this.fire.firestore.collection('Users').doc(`Users/${refid}`).get();
         let refid = await this.fire.collection('Users').add(clonedObj)
+        this.createContacts(refid.id,userloggedin.contacts as contact[])
         //create contacts
-        this.createContacts(refid.id,userloggedin.contacts as contact[])// update
-
+        // update
       }else{
-        //curruser.docs[0].id
-        this.createContacts(curruser.docs[0].id,userloggedin.contacts as contact[])
+        let id = curruser.docs[0].id
+        let docdata = await this.fire.firestore.collection('Users').doc(`${id}`).get();
+        this.Add_or_createContacts(docdata,userloggedin.contacts as contact[])
       }
     })
   }
-
-  createContacts(id: string, contacts: contact[]) {
-    let docrefcontacts:string[]=[]
+  Add_or_createContacts(docdata: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>, contacts: contact[]) {
+  let docrefcontacts:string[]=[]
 
     contacts.forEach(contact => {
       if(contact.email){
@@ -125,8 +129,57 @@ export class LoginOrSignUpComponent implements OnInit {
                 //this keeps looping and updating the user object which must not happen
                 //need a way to use the contact list outside subscribe and the foreach loop
                 //not a fix !!! change implementation
+                this.fire.collection('Users').doc(docdata.id).update({contacts: docrefcontacts})
+              })
+            } else if (!data.empty){
+              //check if id is already present or populated in contacts array
+              let userdata = docdata.data() as Users;
+              //here contact must be the id
+              let contact_info =data.docs[0].data() as Users
+              if(!userdata.contacts.includes(data.docs[0].id)){
+                docrefcontacts.push(data.docs[0].id)
+                this.fire.collection('Users').doc(docdata.id).update({contacts: docrefcontacts})
+              }
+            }
+
+          })
+
+        }
+        }
+      )
+
+  }
+
+  createContacts(id: string, contacts: contact[]) {
+    let docrefcontacts:string[]=[]
+
+    contacts.forEach(contact => {
+      if(contact.email){
+
+        let dem=this.fire.collection('Users',(ref) => ref.where('email', '==', contact.email?.toLowerCase())).get()
+          dem.subscribe(async data=>{
+
+            if(data.empty){
+              //add the contact
+              this.fire.collection('Users').add(contact).then(value=>
+              {
+                docrefcontacts.push(value.id)
+                //this keeps looping and updating the user object which must not happen
+                //need a way to use the contact list outside subscribe and the foreach loop
+                //not a fix !!! change implementation
                 this.fire.collection('Users').doc(id).update({contacts: docrefcontacts})
               })
+            }
+            else if (!data.empty){
+              //check if id is already present or populated in contacts array
+              let userdocdata = await this.fire.firestore.collection('Users').doc(`${id}`).get()
+              let curruserdata = userdocdata.data() as Users;
+              //here contact must be the id
+              let contact_info =data.docs[0].data() as Users
+             if(!curruserdata.contacts.includes(data.docs[0].id)){
+                docrefcontacts.push(data.docs[0].id)
+                this.fire.collection('Users').doc(userdocdata.id).update({contacts: docrefcontacts})
+              }
             }
           })
 

@@ -14,6 +14,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   templateUrl: './recent-messages.component.html',
   styleUrls: ['./recent-messages.component.css']
 })
+
 export class RecentMessagesComponent implements OnInit {
   count =0;
   cuurentUser!:string;
@@ -30,14 +31,13 @@ export class RecentMessagesComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-
-
     this.authservice.userData.pipe(take(1)).subscribe(cuurentUser=>{
       this.cuurentUser=cuurentUser.email;
-
-      this.fb.getCurrentUser(this.cuurentUser).pipe(take(1)).subscribe( data=>
-      {
+      //
+      //Subscribe called multiple times needs a fix
+      //.pipe(take(1))
+      this.fb.getCurrentUser(this.cuurentUser).subscribe( data=>
+      { this.recent_contact_list=[]
 
           console.log("Getting current user")
           this.count++;
@@ -50,11 +50,10 @@ export class RecentMessagesComponent implements OnInit {
 
             console.log(this.userinfo.contacts,'user contacts')
               let userinfocount=0;
-
+            if(this.userinfo.contacts.length>0){
               this.userinfo.contacts.forEach( contact => {
                 userinfocount++;
                 console.log(userinfocount,'useinfocount')
-                //contact =`Users/${contact}` as unknown as DocumentReference
 
                 this.angf.firestore.doc(`Users/${contact}`).get().then(documntsnapshot=>{
                   let element = documntsnapshot.data() as Users;
@@ -116,15 +115,33 @@ export class RecentMessagesComponent implements OnInit {
                 })
 
               });
+            }
+
+              // let query = config.db
+              // .collection(USER_COLLECTION_NAME)
+              // .where("id", "==", matchesIdArray[0]);
+
+
+            //const users = await query.get();
+              //this.angf.collection("Chats",ref=> ref.where())
+              //we have ontact list
+
+
+              // this.angf.collection('Chats', ref => ref.where('from','==',).where('to','==',this.userinfo.name))
+              // .valueChanges();
+
+
+              // this.angf.collection("Chats",ref=>)
+
+
+              // if contact not present in contat list
+              // sends a message
+              // need to add the user to recent contact list
+
 
           })
     })
   }
-
-
-
-
-
 
 
   callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string){
