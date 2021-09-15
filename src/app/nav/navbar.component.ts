@@ -23,7 +23,13 @@ export class NavbarComponent implements OnInit {
     console.log( 'app component',this.toggleflag)
     this.toggleflag = true
     this.authservice.userData.subscribe(userinfo=>
-        this.CurrentUserEmail=userinfo.email
+      {
+        if(userinfo){
+          this.CurrentUserEmail=userinfo.email
+        }
+
+      }
+
     )
     if(this.CurrentUserEmail){
       this.fb.getCurrentUser(this.CurrentUserEmail).subscribe(data=>

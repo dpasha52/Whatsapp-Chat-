@@ -15,7 +15,7 @@ declare var gapi:any
 })
 export class AuthenticationService {
   userData:Observable<any>;
-  user$: Observable<any>;
+  user$: Observable<firebase.User | null>;
   people?:any[];
 
   constructor(private angularFireAuth: AngularFireAuth) {
@@ -55,6 +55,7 @@ export class AuthenticationService {
 
     //let userCredential= await this.angularFireAuth.signInAndRetrieveDataWithCredential(credential);
     let userCredential = await this.angularFireAuth.signInWithCredential(credential)
+    console.log(contactlist)
     return contactlist;
   }
 
@@ -65,9 +66,15 @@ export class AuthenticationService {
   async getContactList() {
     const people = await gapi.client.people.people.connections.list({
       'resourceName': 'people/me',
-      'pageSize': 2000,
+       'pageSize': 2000,
       'personFields': 'names,emailAddresses,phoneNumbers,photos',
     })
+
+    console.log(people)
+    // if(people.result.connections && people.result.connections.length>1000){
+    //    people.result.nextPageToken
+    // }
+
 
     console.log(people.result.connections)
     let contact :contact = {} as contact ;
@@ -102,6 +109,7 @@ export class AuthenticationService {
             } else{
               contact.profilepic = defalut_url
             }
+            console.log(contact);
             contactlist.push(contact)
           }
         }

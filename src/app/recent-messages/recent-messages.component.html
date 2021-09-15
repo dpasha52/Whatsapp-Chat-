@@ -12,9 +12,10 @@
                 </div>
                 <div class="card-body contacts_body">
 
-                    <ul class="contacts">
+                    <ul  class="contacts">
+
                         <li *ngFor="let item of recent_contact_list">
-                            <div (click)="callFunct(currentUsername,item.name,true,item.profilepic)" class="d-flex bd-highlight">
+                            <div (click)="callFunct(currentUsername,item.email,true,item.profilepic,item.name)" class="d-flex bd-highlight">
                                 <div class="img_cont">
                                     <img *ngIf="item.profilepic" [src]="item?.profilepic" class="rounded-circle user_img">
                                     <span class="online_icon"></span>

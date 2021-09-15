@@ -59,7 +59,7 @@ export class NewchatComponent implements OnInit {
                   console.log(this.count,"how many times")
                   this.userinfo= data[0] ;
 
-                  this.currentUsername=this.userinfo.name;
+                  this.currentUsername=this.userinfo.email;
                   console.log(this.userinfo,"Check data recieved ")
                   console.log(data[0],"Check data recieved ")
 
@@ -91,7 +91,7 @@ export class NewchatComponent implements OnInit {
                             }
                           })
                           let varcount =0
-                          this.fb.getCombinatedChats(element.name,this.currentUsername).pipe(take(2)).subscribe( chatrecords=>{
+                          this.fb.getCombinatedChats(element.email,this.currentUsername).pipe(take(2)).subscribe( chatrecords=>{
                             varcount++
                             console.log( element.name,varcount,'check the set ')
 
@@ -151,16 +151,17 @@ export class NewchatComponent implements OnInit {
     console.log(this.toggletrue);
   }
 
-  callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string){
+
+
+  callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string,uname:string){
     let data:any= {
-    currentuser,reciever,imgurl
+    currentuser,reciever,imgurl,uname
     }
     this.shareData.postdata(data);
     this.tooglefunc()
-    if(clicked){
-      //this.clickcount++
-    }
 
   }
+
+
 }
 

@@ -8,6 +8,11 @@ import { chatfilterData } from '../chatdata';
 })
 export class SharedataService {
 
+
+    event:any ={1:1};
+    private eventsrc =new BehaviorSubject(this.event)
+    currevent = this.eventsrc.asObservable();
+
     data:chatfilterData={} as chatfilterData
     private messageSource = new BehaviorSubject(this.data);
     currentMessage = this.messageSource.asObservable();
@@ -16,6 +21,10 @@ export class SharedataService {
 
     postdata(message: any) {
       this.messageSource.next(message)
+    }
+
+    postevent(dta:any){
+      this.eventsrc.next(dta);
     }
 
 }
