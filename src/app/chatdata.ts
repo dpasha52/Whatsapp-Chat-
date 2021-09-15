@@ -32,7 +32,8 @@ export interface UserMetaData{
 export interface chatfilterData{
   currentuser:string,
   reciever:string,
-  imgurl:string
+  imgurl:string,
+  uname:string
 }
 
 export interface contact {
@@ -40,6 +41,7 @@ export interface contact {
   email?:string,
   phonenumber?:string,
   profilepic?:string
+  unknowncontacts?:string[]
 }
 
 //for later

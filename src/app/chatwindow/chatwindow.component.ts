@@ -52,29 +52,44 @@ export class ChatwindowComponent implements OnInit{
 
   async submitFunction(){
     var chat:Chats={} as Chats;
-    if(!!this.text_submit){
+    if(!!this.text_submit && !!this.data.currentuser && !!this.data.reciever){
       chat.from=this.data.currentuser;
 
       chat.text=this.text_submit;
       chat.to=this.data.reciever;
       chat.timestamp= new Date();
+
+      // let dummydata = Math.random();
+      // this.sharedService.postevent(dummydata);
+
       let userdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.to).limit(1).get()
       let user = userdocdata.docs[0].data() as Users
-      let curruserdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.from).limit(1).get();
-      let curruser = curruserdocdata.docs[0].data() as Users
+      let curdocdata =  await this.ngf.firestore.collection("Users").where('name','==',chat.from).limit(1).get()
+      let curruser = curdocdata.docs[0].data() as Users
+      if (user.contacts.includes(curdocdata.docs[0].id)){
+        this.fb.setChats(chat);
+      }
+      else{
+        //update only the field
+        let unknowncontacts = user.unknowncontacts
 
-      if (!user.contacts.includes(curruser.customID)){
-        //add unknown users
-          if(!user.unknowncontacts){
-            user.unknowncontacts=[]
-            user.unknowncontacts.push(curruser.customID)
-          }else{
-            user.unknowncontacts.push(curruser.customID)
-          }
+
       }
 
-      this.fb.setChats(chat);
+//      let userdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.to).limit(1).get()
+  //    let user = userdocdata.docs[0].data() as Users
+  //    let curruserdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.from).limit(1).get();
+   //   let curruser = curruserdocdata.docs[0].data() as Users
 
+      // if (!user.contacts.includes(curruser.customID)){
+      //   //add unknown users
+      //     if(!user.unknowncontacts){
+      //       user.unknowncontacts=[]
+      //       user.unknowncontacts.push(curruser.customID)
+      //     }else{
+      //       user.unknowncontacts.push(curruser.customID)
+      //     }
+      // }
 
     }
 
