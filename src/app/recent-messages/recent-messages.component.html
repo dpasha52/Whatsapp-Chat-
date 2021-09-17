@@ -12,10 +12,26 @@
                 </div>
                 <div class="card-body contacts_body">
 
+                      <ul *ngIf="length>0">
+                        # Unknown Contacts
+                        <li *ngFor="let item of unknown_contact_list">
+                            <div (click)="callFunct(currentUsername,item.email,true,item.profilepic,item.name)" class="d-flex bd-highlight">
+                                 <div class="img_cont">
+                                    <img *ngIf="item.profilepic" [src]="item?.profilepic" class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>{{item.name}}</span>
+                                    <p style="font-size: 15px;">{{item?.lastmessage}}</p>
+                                    <p>{{ item?.time | date: 'shortTime' }}</p>
+                                </div>
+                            </div>
+                        </li>
+                      </ul>
                     <ul  class="contacts">
 
                         <li *ngFor="let item of recent_contact_list">
-                            <div (click)="callFunct(currentUsername,item.email,true,item.profilepic,item.name)" class="d-flex bd-highlight">
+                            <div (click)="callFunct(currentUsername,item.email,false,item.profilepic,item.name)" class="d-flex bd-highlight">
                                 <div class="img_cont">
                                     <img *ngIf="item.profilepic" [src]="item?.profilepic" class="rounded-circle user_img">
                                     <span class="online_icon"></span>
@@ -27,18 +43,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="d-flex bd-highlight">
-                                <div class="img_cont">
-                                    <img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg" class="rounded-circle user_img">
-                                    <span class="online_icon offline"></span>
-                                </div>
-                                <div class="user_info">
-                                    <span>Taherah Big</span>
-                                    <p>Taherah left 7 mins ago</p>
-                                </div>
-                            </div>
-                        </li>
+
                         <li>
                             <div class="d-flex bd-highlight">
                                 <div class="img_cont">
@@ -54,12 +59,12 @@
                         <li>
                             <div class="d-flex bd-highlight">
                                 <div class="img_cont">
-                                    <img src="http://profilepicturesdp.com/wp-content/uploads/2018/07/sweet-girl-profile-pictures-9.jpg" class="rounded-circle user_img">
+                                    <img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg" class="rounded-circle user_img">
                                     <span class="online_icon offline"></span>
                                 </div>
                                 <div class="user_info">
-                                    <span>Nargis Hawa</span>
-                                    <p>Nargis left 30 mins ago</p>
+                                    <span>Taherah Big</span>
+                                    <p>Taherah left 7 mins ago</p>
                                 </div>
                             </div>
                         </li>

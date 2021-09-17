@@ -105,6 +105,7 @@ export class LoginOrSignUpComponent implements OnInit {
     }else{
       var clonedObj = Object.assign({}, userloggedin);
       clonedObj.contacts = [];
+      clonedObj.unknowncontacts=[];
       let refid = await this.fire.collection('Users').add(clonedObj)
       this.createContacts(refid.id,userloggedin.contacts as contact[])
     }
@@ -146,7 +147,6 @@ export class LoginOrSignUpComponent implements OnInit {
   //       }
   //       }
   //     )
-
   // }
 
   async createContacts(id: string, contacts: contact[]) {
@@ -162,7 +162,7 @@ export class LoginOrSignUpComponent implements OnInit {
           //console.log(dem.docs[0].id)
           //console.log(dem.docs[0].exists)
           //check if contact present
-          if(dem.docs[0].exists){
+          if(dem.docs.length>0){
             // update only the contacts fields
             //get doc data(Curr user)
 
@@ -181,8 +181,7 @@ export class LoginOrSignUpComponent implements OnInit {
             docrefcontacts.push(ref.id)
             //console.log('create new')
             }
-          }
-
+      }
     }
     //console.log(docrefcontacts)
     this.fire.collection('Users').doc(id).update({contacts: docrefcontacts})

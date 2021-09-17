@@ -20,7 +20,8 @@ export interface Users{
   email:string,
   phonenumber:string,
   about:string,
-  unknowncontacts?:any[]
+  unknowncontacts?:any[],
+  unknown:boolean
 }
 
 
@@ -30,18 +31,20 @@ export interface UserMetaData{
 }
 
 export interface chatfilterData{
-  currentuser:string,
+  currentuser?:string,
   reciever:string,
   imgurl:string,
-  uname:string
+  uname:string,
+  unknown:boolean
 }
 
 export interface contact {
   name:string,
   email?:string,
   phonenumber?:string,
-  profilepic?:string
-  unknowncontacts?:string[]
+  profilepic?:string,
+  unknowncontacts?:string[],
+  contacts?:string[]
 }
 
 //for later

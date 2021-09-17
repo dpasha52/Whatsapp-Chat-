@@ -21,6 +21,7 @@ export class ChatwindowComponent implements OnInit{
   data!:chatfilterData
   records!:Chats[]
   chats_data?:Chats[]
+  unknown:boolean = false
 
   constructor(private sharedService:SharedataService,private fb:FirebaseService,private elementref:ElementRef,private ngf:AngularFirestore) {
     this.sharedService.currentMessage.subscribe(data => {
@@ -40,6 +41,7 @@ export class ChatwindowComponent implements OnInit{
       obsChats1.subscribe((data)=> {
         this.records = data;
         this.chats_data = data;
+        this.unknown= this.data.unknown
 
         let sorted=this.chats_data.sort((a,b)=>a.timestamp.toDate()-b.timestamp.toDate())
         console.log(sorted as Chats[])
@@ -59,43 +61,56 @@ export class ChatwindowComponent implements OnInit{
       chat.to=this.data.reciever;
       chat.timestamp= new Date();
 
-      // let dummydata = Math.random();
-      // this.sharedService.postevent(dummydata);
-
-      let userdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.to).limit(1).get()
+      // this logic is flawed as we are unable to filter contacts we are adding a flag list here to indicate unknown contact
+      let userdocdata = await this.ngf.firestore.collection("Users").where('email','==',chat.to).limit(1).get()
       let user = userdocdata.docs[0].data() as Users
-      let curdocdata =  await this.ngf.firestore.collection("Users").where('name','==',chat.from).limit(1).get()
+      let curdocdata =  await this.ngf.firestore.collection("Users").where('email','==',chat.from).limit(1).get()
       let curruser = curdocdata.docs[0].data() as Users
       if (user.contacts.includes(curdocdata.docs[0].id)){
         this.fb.setChats(chat);
       }
       else{
         //update only the field
-        let unknowncontacts = user.unknowncontacts
-
-
+        let unknowncontacts = user.unknowncontacts;
+        if(!!unknowncontacts && !unknowncontacts!.includes(curdocdata.docs[0].id))
+        unknowncontacts!.push(curdocdata.docs[0].id)
+        this.ngf.collection('Users').doc(userdocdata.docs[0].id).update({unknowncontacts: unknowncontacts})
+        this.fb.setChats(chat);
       }
-
-//      let userdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.to).limit(1).get()
-  //    let user = userdocdata.docs[0].data() as Users
-  //    let curruserdocdata = await this.ngf.firestore.collection("Users").where('name','==',chat.from).limit(1).get();
-   //   let curruser = curruserdocdata.docs[0].data() as Users
-
-      // if (!user.contacts.includes(curruser.customID)){
-      //   //add unknown users
-      //     if(!user.unknowncontacts){
-      //       user.unknowncontacts=[]
-      //       user.unknowncontacts.push(curruser.customID)
-      //     }else{
-      //       user.unknowncontacts.push(curruser.customID)
-      //     }
-      // }
-
     }
-
   }
 
+  async AddtoContact(){
+    let userdocdata = await this.ngf.firestore.collection("Users").where('email','==',this.data.reciever).limit(1).get()
+    let user = userdocdata.docs[0].data() as Users
+    let curdocdata =  await this.ngf.firestore.collection("Users").where('email','==',this.data.currentuser).limit(1).get()
+    let curruser = curdocdata.docs[0].data() as Users
 
+    curruser.unknowncontacts!.splice(curruser.unknowncontacts!.indexOf(userdocdata.docs[0].id),1);
+    curruser.contacts.push(userdocdata.docs[0].id);
+    let uk = curruser.unknowncontacts;
+    let cts= curruser.contacts;
+    this.ngf.collection('Users').doc(curdocdata.docs[0].id).update({unknowncontacts: uk, contacts:cts})
+    this.sharedService.postevent(1);
+    this.data.unknown=false;
+    this.ngOnInit();
+  }
+
+  async RemovefromContacts(){
+    let userdocdata = await this.ngf.firestore.collection("Users").where('email','==',this.data.reciever).limit(1).get()
+    let user = userdocdata.docs[0].data() as Users
+    let curdocdata =  await this.ngf.firestore.collection("Users").where('email','==',this.data.currentuser).limit(1).get()
+    let curruser = curdocdata.docs[0].data() as Users
+
+    curruser.unknowncontacts!.splice(curruser.unknowncontacts!.indexOf(userdocdata.docs[0].id),1);
+    let uk = curruser.unknowncontacts;
+    this.ngf.collection('Users').doc(curdocdata.docs[0].id).update({unknowncontacts: uk})
+    this.sharedService.postevent(false);
+    this.data.unknown=false;
+    this.unknown=false;
+    this.data.currentuser = undefined;
+    this.ngOnInit();
+  }
 }
 
 

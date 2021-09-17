@@ -109,6 +109,8 @@ export class AuthenticationService {
             } else{
               contact.profilepic = defalut_url
             }
+            contact.unknowncontacts=[]
+            contact.contacts=[]
             console.log(contact);
             contactlist.push(contact)
           }

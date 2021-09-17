@@ -9,8 +9,8 @@ import { SharedataService } from 'src/app/common/sharedata.service';
 })
 export class NavrightComponent implements OnInit,DoCheck{
 
-  imgurl!:string;
-  constructor( private service:SharedataService) { }
+  imgurl?:string;
+  constructor( private service:SharedataService,private sharedata: SharedataService) { }
   ngDoCheck(): void {
 
      //this.imgurl = data.imgurl as string;
@@ -20,7 +20,11 @@ export class NavrightComponent implements OnInit,DoCheck{
     this.service.currentMessage.subscribe(data=>{
      this.imgurl = data.imgurl
     })
-
+    this.sharedata.currevent.subscribe(dta=>{
+      if(dta==false){
+        this.imgurl = undefined;
+      }
+    })
   }
 
 }

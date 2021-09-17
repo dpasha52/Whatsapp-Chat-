@@ -1,6 +1,14 @@
 <div class="chat">
     <div class="card">
+        <div *ngIf='unknown'>
+            <div class="text-center">
+                <button class="custom-btn  btn-2" (click)="AddtoContact()">+Add contact</button>
+                <button class="custom-btn  btn-2" (click)="RemovefromContacts()">Block</button>
+            </div>
+        </div>
+
         <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="card-body msg_card_body">
+
             <div *ngFor="let item of chats_data">
                 <div *ngIf="data" class="d-flex justify-content-start mb-4">
                     <div class="img_cont_msg">
@@ -24,9 +32,19 @@
             <div class="card-footer">
                 <div class="input-group">
 
-                    <div class="input-group-append">
-                        <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
+                    <div class="input-group-append dropup">
+                        <!-- <div class="dropup"> -->
+                        <button class="input-group-text attach_btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-paperclip"></i></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">HTML</a></li>
+                            <li><a href="#">CSS</a></li>
+                            <li><a href="#">JavaScript</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">About Us</a></li>
+                        </ul>
+                        <!-- </div> -->
                     </div>
+
                     <input name="blah" #inputTextBox [(ngModel)]="text_submit" class="form-control type_msg" placeholder="Type your message...">
                     <div class="input-group-append">
                         <button (click)="inputTextBox.value=''" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
