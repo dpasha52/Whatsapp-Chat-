@@ -20,7 +20,10 @@
       "es2018",
       "dom"
     ],
-    "skipLibCheck":true
+    "skipLibCheck":true,
+    "types": [
+      "gapi", "gapi.client", "gapi.client.people", "gapi.auth2"
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

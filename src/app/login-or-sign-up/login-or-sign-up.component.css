@@ -1,5 +1,36 @@
 /* '/assets/backgroundimg.jpg'; */
 
+.custom {
+    /* padding-top: auto !important;
+    padding-bottom: auto !important; */
+    /* height: 50%; */
+    padding: 5%;
+}
+
+h4 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+.but_cust {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+.but_cust:hover {
+    background: #2ecc71
+}
+
 .contain {
     background-image: url('../../assets/backgroundimg.jpg');
     background-size: cover;

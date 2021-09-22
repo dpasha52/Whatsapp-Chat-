@@ -23,28 +23,20 @@ export class NavbarComponent implements OnInit {
     console.log( 'app component',this.toggleflag)
     this.toggleflag = true
     this.authservice.userData.subscribe(userinfo=>
-        this.CurrentUserEmail=userinfo.email
-    )
+      {
+        if(userinfo){
+          this.CurrentUserEmail=userinfo.email
+        }
 
-    this.fb.getCurrentUser(this.CurrentUserEmail).subscribe(data=>
+      }
+
+    )
+    if(this.CurrentUserEmail){
+      this.fb.getCurrentUser(this.CurrentUserEmail).subscribe(data=>
         this.CurrentUserData=data[0])
 
-    this.loadContacts();
+    }
 
-  }
-  loadContacts(){
-    //parse all users and check if their contacts has your email id
-
-    // logic
-    //
-    // hard code list of contacts
-    // hard_contacts
-    //  foreach hard_contact with id {
-    //
-    //  }
-    //
-    //
-    //from all users
   }
 
 

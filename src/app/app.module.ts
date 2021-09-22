@@ -19,6 +19,11 @@ import { LoginOrSignUpComponent } from './login-or-sign-up/login-or-sign-up.comp
 import { SignUPComponent } from './sign-up/sign-up.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { SharedataService } from './common/sharedata.service';
+
+// import * as firebase from 'firebase/compat';
+
+// firebase.initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [
@@ -44,7 +49,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     ReactiveFormsModule,
     AngularFireStorageModule
   ],
-  providers: [],
+  providers: [SharedataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

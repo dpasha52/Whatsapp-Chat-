@@ -1,14 +1,16 @@
 <div *ngIf="togglevar" class="max-height">
-
     <div class="chat">
         <div class="blah">
             <div class="card-header msg_head">
-                <div class="d-flex bd-highlight">
-                    <div class="img_cont">
-                        <img [src]='imgsrc' (click)=navigatefunc() class="rounded-circle user_img">
-                        <span class="online_icon"></span>
+
+                <div class="row">
+                    <div class="col-md-8 col-6">
+                        <div class="img_cont">
+                            <img [src]='imgsrc' (click)=navigatefunc() class="rounded-circle user_img">
+                            <span class="online_icon"></span>
+                        </div>
                     </div>
-                    <div class="video_cam">
+                    <div class="col-md-4 col-6">
                         <i class="pad fa fa-commenting-o fa-2x" (click)="openNewMessageComponent()" aria-hidden="true"></i>
                         <i class="pad fa fa-circle-o-notch fa-2x" aria-hidden="true"></i>
                         <i class="pad fa fa-ellipsis-v fa-2x"></i>

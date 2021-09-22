@@ -21,8 +21,7 @@ export class FirebaseService {
   constructor(private firestore: AngularFirestore,private authservice:AuthenticationService) { }
 
 
-  getCombinatedChats(contact:string, username:string): Observable<Chats[]> {
-
+    getCombinatedChats(contact:string, username:string): Observable<Chats[]> {
     //works dont know how need to learn rxjs observables
     //very complicated not returning results as it is supposed to
 
@@ -68,6 +67,7 @@ export class FirebaseService {
 
     return this.firestore.collection('Users', (ref) => ref.where('email', '==', user).limit(1)).valueChanges({ idField: 'customID' }) as Observable<Users[]>;
       //return this.firestore.collection('Users', (ref) => ref.where('email', '==', user).limit(1)).
+
 
 }
 

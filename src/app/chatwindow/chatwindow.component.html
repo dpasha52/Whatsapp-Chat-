@@ -1,6 +1,14 @@
 <div class="chat">
     <div class="card">
+        <div *ngIf='unknown'>
+            <div class="text-center">
+                <button class="custom-btn  btn-2" (click)="AddtoContact()">+Add contact</button>
+                <button class="custom-btn  btn-2" (click)="RemovefromContacts()">Block</button>
+            </div>
+        </div>
+
         <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="card-body msg_card_body">
+
             <div *ngFor="let item of chats_data">
                 <div *ngIf="data" class="d-flex justify-content-start mb-4">
                     <div class="img_cont_msg">
@@ -24,9 +32,32 @@
             <div class="card-footer">
                 <div class="input-group">
 
-                    <div class="input-group-append">
-                        <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
+                    <div class="input-group-append dropup">
+                        <button class="input-group-text attach_btn " data-toggle="dropdown"><i class="fa fa-paperclip"></i></button>
+                        <ul class="dropdown-menu" style="background-color: transparent; border-radius: 0% ; border: transparent;">
+                            <li>
+                                <a class="custbutton contact"></a>
+                            </li>
+                            <li>
+                                <label for="file-upload" class="custbutton document">
+
+                              </label>
+                                <input id='file-upload' type="file" style="display: none;">
+                            </li>
+                            <li>
+                                <a class="custbutton camera"></a>
+                            </li>
+                            <li>
+                                <label for="file-upload" class="custbutton camera">
+
+                              </label>
+                                <!-- (change)="upload($event)" -->
+                                <input id='file-upload' type="file" style="display: none;">
+
+                            </li>
+                        </ul>
                     </div>
+
                     <input name="blah" #inputTextBox [(ngModel)]="text_submit" class="form-control type_msg" placeholder="Type your message...">
                     <div class="input-group-append">
                         <button (click)="inputTextBox.value=''" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
@@ -38,37 +69,3 @@
     </div>
 
 </div>
-<!-- <div class="container" style="height: 70%; overflow-y:scroll;">
-    <div *ngFor="let item of chats_data">
-        <div *ngIf="data">
-            <br>
-            <div *ngIf="(item.from==data.currentuser && item.to==data.reciever)" class="message-blue">
-                <p class="message-content">{{item.text}}</p>
-                <div class="message-timestamp-left">{{item.timestamp.toDate() | date: 'shortTime'}}</div>
-            </div>
-        </div>
-
-        <div *ngIf="data">
-            <br>
-            <div *ngIf="(item.from==data.reciever && item.to == data.currentuser)" class="message-orange">
-                <p class="message-content">{{item.text}}</p>
-                <div class="message-timestamp-right">{{item.timestamp.toDate()| date: 'shortTime'}}</div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
-</div>
-
-<form class="container padding-top-form" (ngSubmit)="submitFunction()" #form="ngForm">
-    <div *ngIf="data" class="input-group input-group-sm mb-3">
-        <div class="col-md-9">
-            <input name="blah" #inputTextBox [(ngModel)]="text_submit" type="text" class="form-control" placeholder="Enter text">
-        </div>
-        <div class="col-md-3">
-            <button (click)="inputTextBox.value=''" class="rounded-circle" style="background-color: rgb(245, 223, 223);">
-  <i class="fa fa-plane" aria-hidden="true"></i>
-</button>
-                    </div>
-                </div>
-        </form> -->

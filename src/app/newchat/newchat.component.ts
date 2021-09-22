@@ -6,6 +6,8 @@ import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
 import { GetrecentusersService } from '../common/getrecentusers.service';
 import { SharedataService } from '../common/sharedata.service';
+import { DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-newchat',
@@ -33,34 +35,11 @@ export class NewchatComponent implements OnInit {
   constructor(private fb:FirebaseService,
     private shareData:SharedataService,
     private getrecentusers:GetrecentusersService,
-     private authservice:AuthenticationService) { }
+     private authservice:AuthenticationService,
+     private angf:AngularFirestore
+     ) { }
 
 
-     demofunc(){
-      // console.log('part3 user on init', this.usersonInit)
-     }
-
-    // functSortByChat(contact: Users, username:string) {
-    //     // getting chats for each user
-    //     this.fb.getCombinatedChats(contact.name,username).subscribe( chatrecords=>{
-    //     //updating "last seen" "last message" and "username" for sorted userlist
-    //   //    this.count= chatrecords.length
-
-    //       //sort list by timestamp to get last seen
-    //       chatrecords.sort((a,b)=>a.timestamp-b.timestamp)
-    //       //set last message
-    //       let lastmessage=chatrecords[chatrecords.length-1].text;
-    //       //Set Count for each user
-
-    //       contact.count = chatrecords.length
-    //       // set last message to be seen
-    //       contact.lastmessage=lastmessage;
-    //       contact.time=chatrecords[chatrecords.length-1].timestamp.toDate();
-    //       this.recent_contact_list.push(contact);
-    //     })
-
-
-    // }
 
 
  ngOnInit(): void {
@@ -80,7 +59,7 @@ export class NewchatComponent implements OnInit {
                   console.log(this.count,"how many times")
                   this.userinfo= data[0] ;
 
-                  this.currentUsername=this.userinfo.name;
+                  this.currentUsername=this.userinfo.email;
                   console.log(this.userinfo,"Check data recieved ")
                   console.log(data[0],"Check data recieved ")
 
@@ -90,9 +69,9 @@ export class NewchatComponent implements OnInit {
                       this.userinfo.contacts.forEach( contact => {
                         userinfocount++;
                         console.log(userinfocount,'useinfocount')
+                        //contact =`Users/${contact}` as unknown as DocumentReference
 
-                        contact.get().then((documntsnapshot: { data: () => Users; })=>{
-
+                        this.angf.firestore.doc(`Users/${contact}`).get().then(documntsnapshot=>{
 
                           let element = documntsnapshot.data() as Users;
 
@@ -112,11 +91,11 @@ export class NewchatComponent implements OnInit {
                             }
                           })
                           let varcount =0
-                          this.fb.getCombinatedChats(element.name,this.currentUsername).pipe(take(2)).subscribe( chatrecords=>{
+                          this.fb.getCombinatedChats(element.email,this.currentUsername).pipe(take(2)).subscribe( chatrecords=>{
                             varcount++
                             console.log( element.name,varcount,'check the set ')
 
-
+                            if(chatrecords.length !=0){
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                               //screwed up logic revise !!important !!! not a fix
                         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,6 +125,7 @@ export class NewchatComponent implements OnInit {
                             }
                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             this.recent_contact_list.sort((a,b)=>b.count - a.count)
+                          }
                             console.log(this.recent_contact_list)
                             })
 
@@ -171,16 +151,17 @@ export class NewchatComponent implements OnInit {
     console.log(this.toggletrue);
   }
 
-  callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string){
+
+
+  callFunct(currentuser: any,reciever: any,clicked:boolean, imgurl:string,uname:string){
     let data:any= {
-    currentuser,reciever,imgurl
+    currentuser,reciever,imgurl,uname
     }
     this.shareData.postdata(data);
     this.tooglefunc()
-    if(clicked){
-      //this.clickcount++
-    }
 
   }
+
+
 }
 

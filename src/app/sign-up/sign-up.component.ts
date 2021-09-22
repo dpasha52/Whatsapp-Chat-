@@ -29,23 +29,23 @@ export class SignUPComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    onSubmit(){
-      console.log('this is working')
+  //   onSubmit(){
+  //     console.log('this is working')
 
-      let signedup=this.authservice.SignUp(this.SignUpForm.controls['email_or_phone'].value,this.SignUpForm.controls['password'].value)
-      signedup.then(data=>
-      {
-        console.log(data);
-        var user:Users={} as Users;
-        user.name=this.SignUpForm.controls['name'].value;
-        user.profilepic=myGlobals.defalut_url;
-        user.email=this.SignUpForm.controls['email_or_phone'].value;
-        this.fb.setUser(user);
-      }).catch(err=>{
-        console.log(err)
-      })
+  //     let signedup=this.authservice.SignUp(this.SignUpForm.controls['email_or_phone'].value,this.SignUpForm.controls['password'].value)
+  //     signedup.then(data=>
+  //     {
+  //       console.log(data);
+  //       var user:Users={} as Users;
+  //       user.name=this.SignUpForm.controls['name'].value;
+  //       user.profilepic=myGlobals.defalut_url;
+  //       user.email=this.SignUpForm.controls['email_or_phone'].value;
+  //       this.fb.setUser(user);
+  //     }).catch(err=>{
+  //       console.log(err)
+  //     })
 
-  }
+  // }
 
 
 }
