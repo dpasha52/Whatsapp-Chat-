@@ -5,7 +5,9 @@ export interface Chats{
   from:string,
   text:string,
   timestamp:any,
-  to:string
+  to:string,
+  imgsorvids:string[],
+  docs:string[],
 }
 
 export interface Users{

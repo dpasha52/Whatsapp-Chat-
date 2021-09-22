@@ -1,2 +1,21 @@
-<button (click)="login()" class="button is-danger">Login with Google</button>
-<button (click)="this.authservice.logout()" class="button">Logout</button>
+<div class="contain">
+    <div class="container">
+        <div class="custom">
+            <div>
+                <h4>
+                    Note: Before you login add necessary contacts to your google account and sync it ,only then will your contacts be available.<br>Also Note: The app is designed only for Email addressess for now. Will soon roll out login via Phone number
+                    and site optimization for mobile devices.
+                </h4>
+                <p style="text-align: center; color: white;">
+                    Hi Fellas! This is a Demo App in testing phase Best viewed in desktop mode. Feel free to scrutinize and suggest changes to my work. For now the search bar, sending document or image or video in chat isn't working. This is only for testing purposes. <br>
+                    <span style="color: yellow;">Contact me at dpasha52@gmail.com</span>
+                </p>
+            </div>
+
+            <div class="d-flex justify-content-center ">
+                <button (click)="login()" class="but_cust">Login with Google</button>
+                <button (click)="this.authservice.logout()" class="but_cust">Logout</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -76,17 +76,19 @@ export class UpdateProfileComponent implements OnInit {
 
 
     if(!!this.file){
-      //delete existing image
-      var task = this.ngfs.upload( `ProfilePics/${this.userinfo.email}` ,this.file)
 
-
-      //replace the image
-      const fileRef = this.ngfs.ref(`ProfilePics/${this.userinfo.email}`);
-      fileRef.getDownloadURL().subscribe(data=>{
-        this.userinfo.profilepic=data;
-        this.saveData();
-      })
-    }else{
+          let ref=`ProfilePics/${this.userinfo.email}`
+          let  task = this.ngfs.upload(ref,this.file);
+              const varfile = this.ngfs.ref(ref);
+            task.snapshotChanges().pipe(
+              finalize(() => {
+                varfile.getDownloadURL().subscribe((url) => {
+                  this.userinfo.profilepic = url
+                  this.saveData();
+                });
+              })
+            ).subscribe();
+    } else {
       this.saveData()
     }
   }
