@@ -115,6 +115,8 @@
     text-decoration: none;
 } */
 
+
+/*
 body,
 html {
     height: 100%;
@@ -122,6 +124,10 @@ html {
     background: #7F7FD5;
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
     background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+} */
+
+#something {
+    height: 100vh;
 }
 
 .chat {

@@ -20,6 +20,10 @@ import { SignUPComponent } from './sign-up/sign-up.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { SharedataService } from './common/sharedata.service';
+import { MobileappComponent } from './mobileapp/mobileapp.component';
+import { ContactsComponent } from './mobileapp/contacts/contacts.component';
+import { ChatsComponent } from './mobileapp/Chats/chats.component';
+import { MupdateScreenComponent } from './mobileapp/MobileUpdate/mupdate-screen.component';
 
 // import * as firebase from 'firebase/compat';
 
@@ -36,7 +40,11 @@ import { SharedataService } from './common/sharedata.service';
     ChatwindowComponent,
     LoginOrSignUpComponent,
     SignUPComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    MobileappComponent,
+    ContactsComponent,
+    ChatsComponent,
+    MupdateScreenComponent
   ],
   imports: [
     BrowserModule,

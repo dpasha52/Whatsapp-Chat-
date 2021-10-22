@@ -1,21 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 
-.app-root {
-    display: block;
-    /* height: 100vh; */
-    height: 100%;
-    /* overflow: hidden; */
-}
+
+/* .app-root { */
+
+
+/* display: block; */
+
+
+/* height: 100vh; */
+
+
+/* height: 100%; */
+
+
+/* overflow: hidden; */
+
+
+/* } */
 
 html,
 body {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
     display: block;
     background: #7F7FD5;
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
     background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
     /* min-height: 100vh; */
     /* max-height: 100vh; */
-    min-height: 100%;
+    height: 100%;
     /* overflow: hidden */
     /* height: auto;
     margin: 0;

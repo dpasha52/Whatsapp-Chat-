@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FirebaseService } from './common/firebase.service';
 
 @Component({
@@ -8,11 +9,13 @@ import { FirebaseService } from './common/firebase.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private fb:FirebaseService ){}
+  constructor(private fb:FirebaseService, private rout:Router ){}
   title = 'WhatsappDemo2';
 
   ngOnInit(): void{
+
     // this.fb.getChats();
     // this.fb.getUsers();
   }
+
 }

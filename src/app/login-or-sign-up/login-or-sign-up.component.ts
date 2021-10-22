@@ -8,15 +8,20 @@ import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,signInWithRedirect
 import { contact, Users } from '../chatdata';
 import { FirebaseService } from '../common/firebase.service';
 import { defalut_url } from '../global';
+import * as myglobals from '../global';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import firebase from 'firebase/compat';
 import { first, take } from 'rxjs/operators';
+import { SharedataService } from '../common/sharedata.service';
+
 //import 'rxjs/add/operator/first';
+
 
 declare var  gapi: any;
 let docrefcontacts:string[]=[]
+//myglobals.mobile = false
 // function initClient() {
 //   gapi.client.init({
 
@@ -47,6 +52,7 @@ export class LoginOrSignUpComponent implements OnInit {
               private router: Router,
               private fb:FirebaseService ,
               private fire:AngularFirestore,
+              private shared:SharedataService
               ){}
               //public db: AngularFireDatabase) { }
 
@@ -84,12 +90,28 @@ export class LoginOrSignUpComponent implements OnInit {
       }
       userloggedin.contacts=contacts
       this.createUser(userloggedin);
+      if( this.checkwidth()){
+        this.router.navigate(['m/app']);
+      }
+      else{
+        this.router.navigate(['app']);
+      }
 
-       this.router.navigate(['app']);
        console.log(userloggedin,"Loggged in user")
 
     }
 
+}
+
+checkwidth() {
+  let windowWidth = window.screen.width < window.outerWidth ?
+                  window.screen.width : window.outerWidth;
+    this.shared.postMobtrue((windowWidth < 500))
+    if(windowWidth<500){
+      return true
+    }
+    else
+    return false
 }
 
 

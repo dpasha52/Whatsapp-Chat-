@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { share, take } from 'rxjs/operators';
 import { Chats, UserMetaData, Users } from '../chatdata';
 import { AuthenticationService } from '../common/authentication.service';
 import { FirebaseService } from '../common/firebase.service';
@@ -8,6 +8,7 @@ import { GetrecentusersService } from '../common/getrecentusers.service';
 import { SharedataService } from '../common/sharedata.service';
 import { DocumentReference } from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newchat',
@@ -36,13 +37,20 @@ export class NewchatComponent implements OnInit {
     private shareData:SharedataService,
     private getrecentusers:GetrecentusersService,
      private authservice:AuthenticationService,
-     private angf:AngularFirestore
+     private angf:AngularFirestore,
+     private router:Router
      ) { }
 
 
 
 
  ngOnInit(): void {
+
+  this.shareData.currmobsrc.subscribe(data=>{
+    if(data){
+      document.getElementById('something')!.style.paddingRight="0%"
+    }
+  })
     this.recent_contact_list=[]
     console.log("Im in Oninit of recent chat");
     // .pipe(take(1))
@@ -128,17 +136,8 @@ export class NewchatComponent implements OnInit {
                           }
                             console.log(this.recent_contact_list)
                             })
-
-
-
-
                         })
-
-
                       });
-
-
-
                   })
             })
 
@@ -149,6 +148,12 @@ export class NewchatComponent implements OnInit {
     this.toggletrue= !this.toggletrue;
     this.toggletrueChange.emit(this.toggletrue);
     console.log(this.toggletrue);
+
+    this.shareData.currmobsrc.subscribe(dta=>{
+      if(dta){
+        this.router.navigate(['m/app'])
+      }
+    })
   }
 
 
@@ -159,7 +164,11 @@ export class NewchatComponent implements OnInit {
     }
     this.shareData.postdata(data);
     this.tooglefunc()
-
+    this.shareData.currmobsrc.subscribe(dta=>{
+      if(dta){
+        this.router.navigate(['m/chats'])
+      }
+    })
   }
 
 

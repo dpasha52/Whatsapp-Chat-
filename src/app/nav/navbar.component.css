@@ -1,5 +1,10 @@
 .nav-pad {
     padding-left: 0%;
     padding-right: 0%;
+    /* height: 100vh; */
+    height: inherit;
+}
+
+.container-fluid {
     height: 100vh;
 }

@@ -17,6 +17,11 @@ export class SharedataService {
     private messageSource = new BehaviorSubject(this.data);
     currentMessage = this.messageSource.asObservable();
 
+    mobile:boolean = false
+    private mobsrc = new BehaviorSubject(this.mobile);
+    currmobsrc = this.mobsrc.asObservable();
+
+
     constructor() { }
 
     postdata(message: any) {
@@ -25,6 +30,10 @@ export class SharedataService {
 
     postevent(dta:any){
       this.eventsrc.next(dta);
+    }
+
+    postMobtrue(dta:boolean){
+      this.mobsrc.next(dta);
     }
 
 }

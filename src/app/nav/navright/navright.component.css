@@ -143,6 +143,7 @@ html {
 }
 
 .chat {
+    height: 100%;
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -348,7 +349,7 @@ html {
 }
 
 .blah {
-    height: 94px;
+    height: 12%;
     background-color: rgba(0, 0, 0, 0.4) !important;
 }
 

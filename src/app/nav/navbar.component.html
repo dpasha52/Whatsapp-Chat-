@@ -1,8 +1,10 @@
-<div class="row ">
-    <!-- (finishedLoading)="hasLoaded = $event" -->
-    <app-navleft class="nav-pad col-md-4" *ngIf="toggleflag" [(toggletrue)]="toggleflag"></app-navleft>
+<div class="container-fluid">
+    <div class="row " style="height: inherit;">
+        <!-- (finishedLoading)="hasLoaded = $event" -->
+        <app-navleft class="nav-pad col-md-4 col-lg-4 col-xl-4" *ngIf="toggleflag" [(toggletrue)]="toggleflag"></app-navleft>
 
-    <app-newchat class="nav-pad col-md-4" *ngIf="!toggleflag" [(toggletrue)]="toggleflag"></app-newchat>
-    <app-navright *ngIf="hasLoaded" class="nav-pad col-md-8"></app-navright>
-    <!--  -->
+        <app-newchat class="nav-pad col-md-4 col-lg-4 col-xl-4" *ngIf="!toggleflag" [(toggletrue)]="toggleflag"></app-newchat>
+        <app-navright *ngIf="hasLoaded" class="nav-pad col-md-8 col-lg-8 col-xl-8"></app-navright>
+        <!--  -->
+    </div>
 </div>

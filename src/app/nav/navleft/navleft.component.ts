@@ -7,6 +7,7 @@ import { FirebaseService } from 'src/app/common/firebase.service';
 import { SharedataService } from 'src/app/common/sharedata.service';
 
 
+
 @Component({
   selector: 'app-navleft',
   templateUrl: './navleft.component.html',
@@ -28,10 +29,15 @@ export class NavleftComponent implements OnInit {
     console.log(this.data,"data recieved from firebase")
   }
 
-  openNewMessageComponent(){
+  async openNewMessageComponent(){
     this.toggletrue= !this.toggletrue;
     this.toggletrueChange.emit(this.toggletrue);
     console.log(this.toggletrue);
+    this.share.currmobsrc.subscribe(dta=>{
+      if(dta){
+        this.router.navigate(['m/contacts'])
+      }
+    })
   }
 
 

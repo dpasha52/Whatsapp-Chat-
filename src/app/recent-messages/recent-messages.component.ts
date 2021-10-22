@@ -8,6 +8,7 @@ import { GetrecentusersService } from '../common/getrecentusers.service';
 import { SharedataService } from '../common/sharedata.service';
 import { DocumentReference, DocumentSnapshot } from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 //let recent_contact_list =[] as Users[];
 @Component({
   selector: 'app-recent-messages',
@@ -31,7 +32,7 @@ export class RecentMessagesComponent implements OnInit {
   length =0;
 
   constructor(private fb: FirebaseService, private shareData:SharedataService, private getrecentusers:GetrecentusersService,
-    private authservice: AuthenticationService,private angf:AngularFirestore ) {
+    private authservice: AuthenticationService,private angf:AngularFirestore, private router:Router ) {
       this.shareData.currevent.subscribe(dta=>{
         this.ngOnInit();
       })
@@ -405,6 +406,11 @@ export class RecentMessagesComponent implements OnInit {
     currentuser,reciever,imgurl,uname,unknown
     }
     this.shareData.postdata(data);
+    this.shareData.currmobsrc.subscribe(dta=>{
+      if(dta){
+        this.router.navigate(['m/chats'])
+      }
+    })
 
   }
 
